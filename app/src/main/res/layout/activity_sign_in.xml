@@ -38,7 +38,7 @@
 
         <Button
             android:id="@+id/BNin"
-            android:layout_width="199dp"
+            android:layout_width="210dp"
             android:layout_height="wrap_content"
             android:text="Sign In" />
 
