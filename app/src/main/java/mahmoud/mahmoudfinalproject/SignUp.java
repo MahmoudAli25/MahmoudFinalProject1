@@ -41,6 +41,13 @@ public class SignUp extends AppCompatActivity {
                 startActivity(i);
             }
         });
+        BNsave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+                checkAndSave();
+            }
+        });
     }
 
         private void checkAndSave()//داله تفحص اذا اليميل صحيح وكلمة السر تطابق الاخرى
@@ -74,7 +81,8 @@ public class SignUp extends AppCompatActivity {
             if (isok)
             {
                 FirebaseAuth auth = FirebaseAuth.getInstance();//انشاء حساب من ايميل وسسما
-                auth.createUserWithEmailAndPassword(email, passw).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                auth.createUserWithEmailAndPassword(email, passw).addOnCompleteListener(new OnCompleteListener<AuthResult>()
+                {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful())
@@ -91,13 +99,6 @@ public class SignUp extends AppCompatActivity {
                     }
                 });
             }
-            BNsave.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view)
-                {
-                    checkAndSave();
-                }
-            });
         }
 
 
