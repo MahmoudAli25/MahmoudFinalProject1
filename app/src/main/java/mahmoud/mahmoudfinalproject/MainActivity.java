@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId()==R.id.ITMset)
+        if (item.getItemId()==R.id.ITMset)//يفحص هل عند الضغط عزر تطابق الارقام
         {
             Intent i=new Intent(MainActivity.this,Settings.class);
             startActivity(i);
