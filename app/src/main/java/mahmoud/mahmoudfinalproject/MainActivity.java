@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -31,6 +33,11 @@ public class MainActivity extends AppCompatActivity {
         {
             Intent i=new Intent(MainActivity.this,Settings.class);
             startActivity(i);
+        }
+        if (item.getItemId()==R.id.ITMout)
+        //تسجيل الخروج من الحساب
+        {
+            FirebaseAuth.getInstance().signOut();
         }
         if (item.getItemId()==R.id.ITMhist)
         {

@@ -8,12 +8,17 @@
     android:orientation="vertical"
     tools:context=".SignIn">
 
+    <ImageView
+        android:id="@+id/IV1"
+        android:layout_width="match_parent"
+        android:layout_height="397dp"
+        tools:srcCompat="@drawable/logo" />
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout2"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="300dp"
         android:layout_marginRight="10dp"
         tools:layout_editor_absoluteX="15dp"
         tools:layout_editor_absoluteY="276dp">

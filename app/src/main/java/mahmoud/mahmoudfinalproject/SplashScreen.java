@@ -8,6 +8,8 @@ import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class SplashScreen extends AppCompatActivity
 {
     @Override
@@ -22,9 +24,19 @@ public class SplashScreen extends AppCompatActivity
             @Override
             public void run()
             {
-                Intent i= new Intent(SplashScreen.this,SignIn.class);
-                startActivity(i);
-                finish();
+                FirebaseAuth auth=FirebaseAuth.getInstance();
+                if (auth.getCurrentUser()==null)
+                {
+                    Intent i = new Intent(SplashScreen.this, SignIn.class);
+                    startActivity(i);
+                    finish();
+                }
+                else
+                {
+                    Intent i = new Intent(SplashScreen.this, MainActivity.class);
+                    startActivity(i);
+                    finish();
+                }
             }
 
         };
