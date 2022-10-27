@@ -9,10 +9,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageButton;
+import android.widget.ListView;
+import android.widget.SearchView;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+{
+    SearchView SItem;//للبحث عن احد المهام
+    ImageButton IAItem;//لاضافة مهمه جديده الى القائمه
+    ListView ListItem;//قائمة عرض المهم
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -20,6 +27,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        SItem = findViewById(R.id.SItem);
+        IAItem = findViewById(R.id.IAItem);
+        //تجهيز مؤشر لقائمة العرض
+        ListItem = findViewById(R.id.ListItem);
 
     }
 
