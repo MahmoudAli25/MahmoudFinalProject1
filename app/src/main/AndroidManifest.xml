@@ -14,10 +14,10 @@
         android:theme="@style/Theme.MahmoudFinalProject"
         tools:targetApi="31">
         <activity
-            android:name=".AddItem"
+            android:name=".AddClothes"
             android:exported="false" />
         <activity
-            android:name=".SignOut"
+            android:name=".AddItem"
             android:exported="false" />
         <activity
             android:name=".History"

@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.SearchView;
@@ -32,7 +33,18 @@ public class MainActivity extends AppCompatActivity
         //تجهيز مؤشر لقائمة العرض
         ListItem = findViewById(R.id.ListItem);
 
+        IAItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                Intent i=new Intent(MainActivity.this,AddClothes.class);
+                startActivity(i);
+
+            }
+        });
+
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(@NonNull Menu menu) {
