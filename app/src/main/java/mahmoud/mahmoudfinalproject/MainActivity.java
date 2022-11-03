@@ -16,6 +16,9 @@ import android.widget.SearchView;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+/**
+ * MainActivity
+ */
 public class MainActivity extends AppCompatActivity
 {
     SearchView SItem;//للبحث عن احد المهام
@@ -53,12 +56,14 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+    public boolean onOptionsItemSelected(@NonNull MenuItem item)
+    {
         if (item.getItemId()==R.id.ITMset)//يفحص هل عند الضغط عزر تطابق الارقام
         {
             Intent i=new Intent(MainActivity.this,Settings.class);
             startActivity(i);
         }
+
         if (item.getItemId()==R.id.ITMout)
         {
             //تسجيل الخروج
@@ -89,8 +94,9 @@ public class MainActivity extends AppCompatActivity
             });
             //البناء
             AlertDialog dialog=builder.create();
-            dialog.show();
+            dialog.show();//عرض الدايلوج
         }
+
         if (item.getItemId()==R.id.ITMhist)
         {
             Intent d=new Intent(MainActivity.this,History.class);
