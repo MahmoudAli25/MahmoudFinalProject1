@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +27,7 @@ public class AddItem extends AppCompatActivity
     private EditText EdDate;//التاريخ
     private TextView TType;
     private TextInputEditText EdType;//النوع
+    private ImageButton IbClothe;
     private Button BnAdd;
     private Button BnCancel;
 
@@ -40,6 +42,7 @@ public class AddItem extends AppCompatActivity
         EdDate=findViewById(R.id.EdDate);
         TType=findViewById(R.id.TType);
         EdType=findViewById(R.id.EdType);
+        IbClothe=findViewById(R.id.IbClothe);
         BnAdd=findViewById(R.id.BnAdd);
         BnCancel=findViewById(R.id.BnCancel);
 

@@ -8,7 +8,7 @@ public class ClothesItem
      * رقم مميز يتم النتاجه من قبل الخادم
      */
     private String Key;
-    private String Title;
+    private String Event;
     private String Date;
     private String Type;
     private String Color;
@@ -25,9 +25,9 @@ public class ClothesItem
         return Key;
     }
 
-    public String getTitle()
+    public String getEvent()
     {
-        return Title;
+        return Event;
     }
 
     public String getDate()
@@ -58,7 +58,7 @@ public class ClothesItem
 
     public void setTitle(String title)
     {
-        Title = title;
+        Event = Event;
     }
 
     public void setDate(String date)
@@ -85,7 +85,7 @@ public class ClothesItem
     public String toString() {
         return "ClothesItem{" +
                 "Key='" + Key + '\'' +
-                ", Title='" + Title + '\'' +
+                ", Event='" + Event + '\'' +
                 ", Date='" + Date + '\'' +
                 ", Type='" + Type + '\'' +
                 ", Color='" + Color + '\'' +

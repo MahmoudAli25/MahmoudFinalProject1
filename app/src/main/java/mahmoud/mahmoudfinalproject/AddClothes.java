@@ -17,5 +17,8 @@ public class AddClothes extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_clothes);
+
+        ImTShirt=findViewById(R.id.ImTShirt);
+        ImJeans=findViewById(R.id.ImJeans);
     }
 }

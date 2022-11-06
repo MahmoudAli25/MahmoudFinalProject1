@@ -19,7 +19,7 @@
         android:orientation="vertical">
 
         <EditText
-            android:id="@+id/editTextDate2"
+            android:id="@+id/EtDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -27,21 +27,21 @@
             android:inputType="date" />
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/TvEvent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Event Name" />
 
         <CheckBox
-            android:id="@+id/checkBox"
+            android:id="@+id/CbWore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Wore It" />
 
         <RatingBar
-            android:id="@+id/ratingBar"
+            android:id="@+id/RbCl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
