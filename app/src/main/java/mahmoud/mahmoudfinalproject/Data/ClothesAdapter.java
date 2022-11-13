@@ -38,11 +38,9 @@ public class ClothesAdapter extends ArrayAdapter<ClothesItem>
         EdDate.setText(clothesItem.getDate());
         TvEvent.setText(clothesItem.getEvent());
         RbCl.setRating(clothesItem.getImportant());
-        box.setChecked(false);
+        CbWore.setChecked(false);
 
-
-
-
+        return vitem;
     }
 
 

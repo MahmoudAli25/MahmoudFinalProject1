@@ -13,6 +13,7 @@ public class ClothesItem
     private String Type;
     private String Color;
     private String Owner;
+    private  int Important;
 
     public ClothesItem()
     {
@@ -20,6 +21,13 @@ public class ClothesItem
     }
 
     //get
+
+
+    public int getImportant()
+    {
+        return Important;
+    }
+
     public String getKey()
     {
         return Key;
@@ -56,6 +64,13 @@ public class ClothesItem
         Key = key;
     }
 
+
+
+    public void setImportant(int important)
+    {
+        Important = important;
+    }
+
     public void setTitle(String title)
     {
         Event = Event;
@@ -90,6 +105,8 @@ public class ClothesItem
                 ", Type='" + Type + '\'' +
                 ", Color='" + Color + '\'' +
                 ", Owner='" + Owner + '\'' +
+                ", Important='" + Important + '\'' +
+
                 '}';
     }
 }

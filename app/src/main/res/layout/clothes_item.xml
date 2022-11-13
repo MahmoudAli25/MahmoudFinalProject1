@@ -35,7 +35,7 @@
 
         <CheckBox
             android:id="@+id/CbWore"
-            android:layout_width="wrap_content"
+            android:layout_width="44dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Wore It" />
