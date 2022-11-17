@@ -26,7 +26,7 @@ public class ClothesAdapter extends ArrayAdapter<ClothesItem>
         //بناء واجهه لعرض الملابس
         View vitem= LayoutInflater.from(getContext()).inflate(R.layout.clothes_item,parent,false);
 
-        EditText EdDate=vitem.findViewById(R.id.EdDate);
+        EditText EtDate=vitem.findViewById(R.id.EtDate);
         TextView TvEvent=vitem.findViewById(R.id.TvEvent);
         CheckBox CbWore=vitem.findViewById(R.id.CbWore);
         RatingBar RbCl=vitem.findViewById(R.id.RbCl);
@@ -35,7 +35,7 @@ public class ClothesAdapter extends ArrayAdapter<ClothesItem>
         final ClothesItem clothesItem=getItem(position);
 
         //استخراج القيم من الحقول
-        EdDate.setText(clothesItem.getDate());
+        EtDate.setText(clothesItem.getDate());
         TvEvent.setText(clothesItem.getEvent());
         RbCl.setRating(clothesItem.getImportant());
         CbWore.setChecked(false);

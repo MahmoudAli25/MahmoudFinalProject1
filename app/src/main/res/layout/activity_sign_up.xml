@@ -4,86 +4,65 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingHorizontal="16dp"
     tools:context=".SignUp">
 
-    <LinearLayout
+    <ImageView
+        android:id="@+id/IV2"
         android:layout_width="match_parent"
+        android:layout_height="390dp"
+        app:srcCompat="@drawable/logo" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/ETmup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Email" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/ETreup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint=" Re Password" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/ETpup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Password" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/BNsave"
+        android:layout_width="360dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#635F5F"
+        android:text="Save" />
 
-        <ImageView
-            android:id="@+id/IV2"
-            android:layout_width="match_parent"
-            android:layout_height="378dp"
-            android:layout_weight="1"
-            app:srcCompat="@drawable/logo" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/ETmup"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Email" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/ETpup"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:hint="Password" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/ETreup"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:hint=" Re Password" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="100dp"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/BNsave"
-                android:layout_width="260dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:layout_weight="1"
-                android:backgroundTint="#635F5F"
-                android:text="Save" />
-
-            <Button
-                android:id="@+id/BNcan"
-                android:layout_width="144dp"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="30dp"
-                android:layout_weight="1"
-                android:backgroundTint="#635F5F"
-                android:text="Cancel" />
-        </LinearLayout>
-
-    </LinearLayout>
+    <Button
+        android:id="@+id/BNcan"
+        android:layout_width="190dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#635F5F"
+        android:text="Cancel" />
 
 </LinearLayout>

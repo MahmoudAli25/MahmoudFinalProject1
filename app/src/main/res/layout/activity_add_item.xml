@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:gravity="center"
+    android:paddingHorizontal="16dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,19 +9,26 @@
     android:orientation="vertical"
     tools:context=".AddItem">
 
+    <TextView
+        android:id="@+id/Eevent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Event :"
+        android:textSize="16sp" />
+
     <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/EdTile"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Event" />
+            android:layout_height="wrap_content" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
+        android:layout_marginTop="16dp"
         android:id="@+id/TDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -34,6 +43,7 @@
         android:inputType="date" />
 
     <TextView
+        android:layout_marginTop="16dp"
         android:id="@+id/TType"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -41,42 +51,37 @@
         android:textSize="16sp" />
 
     <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/EdType"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="hint" />
-
-        <ImageButton
-            android:id="@+id/IbClothe"
-            android:layout_width="match_parent"
-            android:layout_height="69dp"
-            android:layout_weight="1"
-            app:srcCompat="@mipmap/ic_launcher_clothes_foreground" />
+            android:layout_height="wrap_content" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <LinearLayout
+    <ImageButton
+        android:layout_marginTop="16dp"
+        android:id="@+id/IbClothe"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:layout_height="59dp"
+        app:srcCompat="@mipmap/ic_launcher_clothes_foreground" />
 
-        <Button
-            android:id="@+id/BnAdd"
-            android:layout_width="209dp"
-            android:layout_height="wrap_content"
-            android:backgroundTint="#635F5F"
-            android:text="Add" />
+    <Button
+        android:layout_marginTop="60dp"
+        android:id="@+id/BnAdd"
+        android:layout_width="360dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#635F5F"
+        android:text="Add" />
 
-        <Button
-            android:id="@+id/BnCancel"
-            android:layout_width="198dp"
-            android:layout_height="wrap_content"
-            android:backgroundTint="#635F5F"
-            android:text="Cancel" />
-    </LinearLayout>
+    <Button
+        android:id="@+id/BnCancel"
+        android:layout_width="190dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#635F5F"
+        android:text="Cancel" />
 
 </LinearLayout>

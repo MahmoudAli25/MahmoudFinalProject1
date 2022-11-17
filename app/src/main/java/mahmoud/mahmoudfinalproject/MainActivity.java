@@ -15,6 +15,14 @@ import android.widget.ListView;
 import android.widget.SearchView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import mahmoud.mahmoudfinalproject.Data.ClothesAdapter;
+import mahmoud.mahmoudfinalproject.Data.ClothesItem;
 
 /**
  * MainActivity
@@ -24,17 +32,28 @@ public class MainActivity extends AppCompatActivity
     SearchView SItem;//للبحث عن احد المهام
     ImageButton IAItem;//لاضافة مهمه جديده الى القائمه
     ListView ListItem;//قائمة عرض المهم
+    //3.1 تجهيز الوسيط
+    ClothesAdapter clothesAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main);//نوع الشاشه افقي او عامودي
+        //3.2 بناء الوسيط
+        clothesAdapter= new ClothesAdapter(getApplicationContext());
+
 
         SItem = findViewById(R.id.SItem);
         IAItem = findViewById(R.id.IAItem);
         //تجهيز مؤشر لقائمة العرض
         ListItem = findViewById(R.id.ListItem);
+
+        ListItem.setAdapter(clothesAdapter);
+        //تشغيل مراقب لاي تغيير على قاعدة البيانات
+        //ويقوم بتنظيف المعطيات الموجوده وتنزيل المعلومات الجديده
+
+        ReadClothesItemtFromFireBase();
 
         IAItem.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,6 +121,38 @@ public class MainActivity extends AppCompatActivity
             Intent d=new Intent(MainActivity.this,History.class);
         }
         return true;
+    }
+    private void ReadClothesItemtFromFireBase()
+    {
+        //اشر لجزر قاعدة البيانات التابعه للمشروع يتخزن تحتها المهمات
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        //ليسينر لمراقبة اي تغيير يحدث تحت الجزر المحدد
+        //اي تغيير بقيمة صفه او حذف او اضافة كائن يتم اعلام اليسينير
+        //عندها يتم تنزيل كل المعطيات الموجوده تحت الجزر
+        reference.child("ClothesItem").addValueEventListener(new ValueEventListener() {
+
+            /**
+             * دالة معالجة الحدث عند تغيير اي قيمه
+             *
+             * @param snapshot يحوي نسخه عن كل المعطيات تحت العنوان المراقب
+             */
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                clothesAdapter.clear();
+
+                //يمحا كل اشي بداخله
+                for (DataSnapshot d : snapshot.getChildren())//d يمر على جميع قيم مبنى المعطيات
+                {
+                    ClothesItem m = d.getValue(ClothesItem.class);//استخراج الكاىن المحفوظ
+                    clothesAdapter.add(m);//اضافة الكائن للوسيط
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+
+        });
     }
 
 }
