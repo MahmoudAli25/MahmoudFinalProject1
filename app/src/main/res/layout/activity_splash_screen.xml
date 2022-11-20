@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:gravity="center"
 
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -12,7 +13,12 @@
     <ImageView
         android:id="@+id/IV3"
         android:layout_width="match_parent"
-        android:layout_height="461dp"
+        android:layout_height="595dp"
         app:srcCompat="@drawable/logo" />
+
+    <pl.droidsonroids.gif.GifImageView
+        android:layout_width="117dp"
+        android:layout_height="64dp"
+        android:src="@drawable/introgifs" />
 
 </LinearLayout>
