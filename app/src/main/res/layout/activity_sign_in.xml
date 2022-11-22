@@ -11,10 +11,10 @@
     tools:context=".SignIn">
 
     <ImageView
-        android:id="@+id/IV1"
+        android:id="@+id/imageView"
         android:layout_width="match_parent"
-        android:layout_height="390dp"
-        tools:srcCompat="@drawable/logo" />
+        android:layout_height="388dp"
+        app:srcCompat="@drawable/logo" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout1"
@@ -43,7 +43,7 @@
 
     <Button
         android:id="@+id/BNin"
-        android:layout_width="360dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:backgroundTint="#635F5F"

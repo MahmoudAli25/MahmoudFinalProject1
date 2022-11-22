@@ -2,16 +2,17 @@ package mahmoud.mahmoudfinalproject;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 
 public class AddClothes extends AppCompatActivity
 {
     private ImageButton IbShirt;
     private ImageButton IbJeans;
+    private Button BCancel;
 
 
     @Override
@@ -22,6 +23,8 @@ public class AddClothes extends AppCompatActivity
 
         IbShirt=findViewById(R.id.IbShirt);
         IbJeans=findViewById(R.id.IbJeans);
+        BCancel=findViewById(R.id.BCancel);
+
 
         IbShirt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,6 +41,16 @@ public class AddClothes extends AppCompatActivity
             {
                 Intent a = new Intent(AddClothes.this,AddItem.class);
                 startActivity(a);
+            }
+        });
+
+        BCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                Intent b=new Intent(AddClothes.this,MainActivity.class);
+                startActivity(b);
+
             }
         });
 

@@ -40,7 +40,7 @@ public class SplashScreen extends AppCompatActivity
             }
 
         };
-        h.postDelayed(r,3000);//نتهي بعد عدد من الثواني
+        h.postDelayed(r,5000);//نتهي بعد عدد من الثواني
     }
 
 }

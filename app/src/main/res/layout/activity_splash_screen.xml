@@ -5,20 +5,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
     android:background="@drawable/clothinglogo"
+    android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".SplashScreen">
 
     <ImageView
         android:id="@+id/IV3"
-        android:layout_width="match_parent"
-        android:layout_height="595dp"
+        android:layout_width="wrap_content"
+        android:layout_height="581dp"
         app:srcCompat="@drawable/logo" />
 
     <pl.droidsonroids.gif.GifImageView
-        android:layout_width="117dp"
-        android:layout_height="64dp"
-        android:src="@drawable/introgifs" />
+        android:layout_width="244dp"
+        android:layout_height="111dp"
+        android:src="@drawable/loading" />
 
 </LinearLayout>

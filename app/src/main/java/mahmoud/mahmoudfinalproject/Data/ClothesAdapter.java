@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import com.google.android.material.textfield.TextInputEditText;
+
 import mahmoud.mahmoudfinalproject.R;
 
 //                                   وسيط من نوع ملابس فقط
@@ -26,7 +28,7 @@ public class ClothesAdapter extends ArrayAdapter<ClothesItem>
         //بناء واجهه لعرض الملابس
         View vitem= LayoutInflater.from(getContext()).inflate(R.layout.clothes_item,parent,false);
 
-        EditText EtDate=vitem.findViewById(R.id.EtDate);
+        TextView EtDate=vitem.findViewById(R.id.EtDate);
         TextView TvEvent=vitem.findViewById(R.id.TvEvent);
         CheckBox CbWore=vitem.findViewById(R.id.CbWore);
         RatingBar RbCl=vitem.findViewById(R.id.RbCl);

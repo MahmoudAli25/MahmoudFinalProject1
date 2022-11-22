@@ -12,19 +12,24 @@
     <ImageButton
         android:id="@+id/IbShirt"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="220dp"
         android:layout_margin="50dp"
-        android:layout_marginHorizontal="62dp"
         android:layout_weight="1"
         app:srcCompat="@mipmap/ic_launcher_foreground" />
 
     <ImageButton
         android:id="@+id/IbJeans"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="220dp"
         android:layout_margin="50dp"
-        android:layout_marginHorizontal="62dp"
         android:layout_weight="1"
         app:srcCompat="@mipmap/ic_launcher_jeanss_foreground" />
+
+    <Button
+        android:id="@+id/BCancel"
+        android:layout_width="265dp"
+        android:layout_height="9dp"
+        android:layout_weight="1"
+        android:text="cancel" />
 
 </LinearLayout>

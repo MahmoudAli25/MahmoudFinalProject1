@@ -18,31 +18,19 @@
         android:layout_weight="1"
         android:orientation="vertical">
 
-        <EditText
+        <TextView
             android:id="@+id/EtDate"
             android:layout_width="match_parent"
             android:layout_height="32dp"
             android:layout_weight="1"
-            android:ems="10"
-            android:inputType="date" />
+            android:hint="date" />
 
         <TextView
-            android:id="@+id/TvEvent1"
+            android:id="@+id/TvEvent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Event Name :" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/TvEvent"
-                android:layout_width="match_parent"
-                android:layout_height="32dp" />
-        </com.google.android.material.textfield.TextInputLayout>
+            android:hint="Event" />
 
         <CheckBox
             android:id="@+id/CbWore"
