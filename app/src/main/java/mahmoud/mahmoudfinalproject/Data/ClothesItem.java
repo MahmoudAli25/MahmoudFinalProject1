@@ -71,9 +71,9 @@ public class ClothesItem
         Important = important;
     }
 
-    public void setTitle(String title)
+    public void setEvent(String event)
     {
-        Event = Event;
+        Event = event;
     }
 
     public void setDate(String date)

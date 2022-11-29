@@ -129,7 +129,10 @@ public class MainActivity extends AppCompatActivity
         //ليسينر لمراقبة اي تغيير يحدث تحت الجزر المحدد
         //اي تغيير بقيمة صفه او حذف او اضافة كائن يتم اعلام اليسينير
         //عندها يتم تنزيل كل المعطيات الموجوده تحت الجزر
-        reference.child("ClothesItem").addValueEventListener(new ValueEventListener() {
+        String owner = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        FirebaseDatabase.getInstance().getReference().
+                child("ClothesItem").
+                child(owner).addValueEventListener(new ValueEventListener() {
 
             /**
              * دالة معالجة الحدث عند تغيير اي قيمه

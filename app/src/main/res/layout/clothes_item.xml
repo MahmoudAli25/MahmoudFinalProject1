@@ -23,21 +23,26 @@
             android:layout_width="match_parent"
             android:layout_height="32dp"
             android:layout_weight="1"
-            android:hint="date" />
+            android:hint="date"
+            android:textColor="#EFEFEF"
+            android:textColorHint="#FFFFFF" />
 
         <TextView
             android:id="@+id/TvEvent"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="41dp"
             android:layout_weight="1"
-            android:hint="Event" />
+            android:hint="Event"
+            android:textColorHint="#FFFFFF" />
 
         <CheckBox
             android:id="@+id/CbWore"
             android:layout_width="153dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Wore It" />
+            android:text="Wore It"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#FFFFFF" />
 
         <RatingBar
             android:id="@+id/RbCl"

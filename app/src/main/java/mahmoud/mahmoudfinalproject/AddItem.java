@@ -1,14 +1,19 @@
 package mahmoud.mahmoudfinalproject;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.media.Image;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,12 +27,12 @@ import mahmoud.mahmoudfinalproject.Data.ClothesItem;
 
 public class AddItem extends AppCompatActivity
 {
-    private TextInputEditText EdTitle;//عنوان
+    private TextInputEditText EdEvent;//عنوان
     private TextView TDate;
     private EditText EdDate;//التاريخ
     private TextView TType;
     private TextInputEditText EdType;//النوع
-    private ImageButton IbClothes;
+    private ImageButton IbClothes;//رفع صوره
     private Button BnAdd;
     private Button BnCancel;
 
@@ -37,7 +42,7 @@ public class AddItem extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_item);
 
-        EdTitle=findViewById(R.id.EdTile);
+        EdEvent=findViewById(R.id.EdEvent);
         TDate=findViewById(R.id.TDate);
         EdDate=findViewById(R.id.EdDate);
         TType=findViewById(R.id.TType);
@@ -45,6 +50,14 @@ public class AddItem extends AppCompatActivity
         IbClothes=findViewById(R.id.IbClothe);
         BnAdd=findViewById(R.id.BnAdd);
         BnCancel=findViewById(R.id.BnCancel);
+
+        IbClothes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent m= new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(m,3);
+            }
+        });
 
         BnAdd.setOnClickListener(new View.OnClickListener()
         {
@@ -68,12 +81,12 @@ public class AddItem extends AppCompatActivity
     private void checkAndSave()
     {
 
-        String title=EdTitle.getText().toString();
+        String event=EdEvent.getText().toString();
         String date=EdDate.getText().toString();
         String type=EdType.getText().toString();
 
         ClothesItem item=new ClothesItem();
-        item.setTitle(title);
+        item.setEvent(event);
         item.setDate(date);
         item.setType(type);
 
@@ -111,5 +124,17 @@ public class AddItem extends AppCompatActivity
 
 
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode,  Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && data != null)
+        {
+            Uri selectedImage = data.getData();
+            ImageView imageView=findViewById(R.id.imageView);
+            imageView.setImageURI(selectedImage);
+        }
     }
 }
