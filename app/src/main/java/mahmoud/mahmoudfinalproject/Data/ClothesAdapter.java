@@ -5,18 +5,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
-import com.google.android.material.textfield.TextInputEditText;
-
 import mahmoud.mahmoudfinalproject.R;
 
 //                                   وسيط من نوع ملابس فقط
-public class ClothesAdapter extends ArrayAdapter<ClothesItem>
+public class ClothesAdapter extends ArrayAdapter<Tshirt>
 {
     public ClothesAdapter(@NonNull Context context)
     {
@@ -33,13 +30,14 @@ public class ClothesAdapter extends ArrayAdapter<ClothesItem>
         CheckBox CbWore=vitem.findViewById(R.id.CbWore);
         RatingBar RbCl=vitem.findViewById(R.id.RbCl);
 
+
         //getting data source
-        final ClothesItem clothesItem=getItem(position);
+        final Tshirt tshirt =getItem(position);
 
         //استخراج القيم من الحقول
-        EtDate.setText(clothesItem.getDate());
-        TvEvent.setText(clothesItem.getEvent());
-        RbCl.setRating(clothesItem.getImportant());
+        EtDate.setText(tshirt.getDate());
+        TvEvent.setText(tshirt.getEvent());
+        RbCl.setRating(tshirt.getImportant());
         CbWore.setChecked(false);
 
         return vitem;

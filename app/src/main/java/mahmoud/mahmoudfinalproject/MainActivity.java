@@ -22,7 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import mahmoud.mahmoudfinalproject.Data.ClothesAdapter;
-import mahmoud.mahmoudfinalproject.Data.ClothesItem;
+import mahmoud.mahmoudfinalproject.Data.Tshirt;
 
 /**
  * MainActivity
@@ -146,7 +146,7 @@ public class MainActivity extends AppCompatActivity
                 //يمحا كل اشي بداخله
                 for (DataSnapshot d : snapshot.getChildren())//d يمر على جميع قيم مبنى المعطيات
                 {
-                    ClothesItem m = d.getValue(ClothesItem.class);//استخراج الكاىن المحفوظ
+                    Tshirt m = d.getValue(Tshirt.class);//استخراج الكاىن المحفوظ
                     clothesAdapter.add(m);//اضافة الكائن للوسيط
                 }
             }

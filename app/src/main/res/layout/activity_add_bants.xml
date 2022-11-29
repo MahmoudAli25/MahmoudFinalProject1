@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/clothinglogo"
+    android:gravity="center"
+    android:paddingHorizontal="16dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".AddTshirt">
+
+  <TextView
+      android:id="@+id/TVevent"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="Event :"
+      android:textSize="16sp" />
+
+  <com.google.android.material.textfield.TextInputLayout
+      style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/TeEvent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+  </com.google.android.material.textfield.TextInputLayout>
+
+  <TextView
+      android:layout_marginTop="16dp"
+      android:id="@+id/TvDate"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="Date :"
+      android:textSize="16sp" />
+
+  <com.google.android.material.textfield.TextInputLayout
+      style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/TeDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+  </com.google.android.material.textfield.TextInputLayout>
+
+  <ImageButton
+      android:layout_marginTop="16dp"
+      android:id="@+id/IbBants"
+      android:layout_width="match_parent"
+      android:layout_height="59dp"
+      app:srcCompat="@mipmap/ic_launcher_clothes_foreground" />
+
+  <Button
+      android:layout_marginTop="60dp"
+      android:id="@+id/BAdd"
+      android:layout_width="360dp"
+      android:layout_height="wrap_content"
+      android:backgroundTint="#635F5F"
+      android:text="Add" />
+
+  <Button
+      android:id="@+id/BaCancel"
+      android:layout_width="190dp"
+      android:layout_height="wrap_content"
+      android:backgroundTint="#635F5F"
+      android:text="Cancel" />
+
+</LinearLayout>

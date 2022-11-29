@@ -30,7 +30,7 @@ public class AddClothes extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                Intent i = new Intent(AddClothes.this,AddItem.class);
+                Intent i = new Intent(AddClothes.this, AddTshirt.class);
                 startActivity(i);
             }
         });
@@ -39,7 +39,7 @@ public class AddClothes extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                Intent a = new Intent(AddClothes.this,AddItem.class);
+                Intent a = new Intent(AddClothes.this, AddBants.class);
                 startActivity(a);
             }
         });

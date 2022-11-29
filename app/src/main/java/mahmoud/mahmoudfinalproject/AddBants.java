@@ -1,11 +1,8 @@
 package mahmoud.mahmoudfinalproject;
-
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -23,35 +20,38 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
-import mahmoud.mahmoudfinalproject.Data.ClothesItem;
+import mahmoud.mahmoudfinalproject.Data.Bants;
+import mahmoud.mahmoudfinalproject.Data.Tshirt;
 
-public class AddItem extends AppCompatActivity
+public class AddBants extends AppCompatActivity
 {
-    private TextInputEditText EdEvent;//عنوان
-    private TextView TDate;
-    private EditText EdDate;//التاريخ
-    private TextView TType;
-    private TextInputEditText EdType;//النوع
-    private ImageButton IbClothes;//رفع صوره
-    private Button BnAdd;
-    private Button BnCancel;
+    private TextInputEditText TeEvent;//عنوان
+    private TextView TVevent;
+    private TextView TvDate;
+    private TextInputEditText TeDate;//التاريخ
+    private ImageButton IbBants;//رفع صوره
+    private Button BAdd;
+    private Button BaCancel;
+
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_item);
+        setContentView(R.layout.activity_add_bants);
 
-        EdEvent=findViewById(R.id.EdEvent);
-        TDate=findViewById(R.id.TDate);
-        EdDate=findViewById(R.id.EdDate);
-        TType=findViewById(R.id.TType);
-        EdType=findViewById(R.id.EdType);
-        IbClothes=findViewById(R.id.IbClothe);
-        BnAdd=findViewById(R.id.BnAdd);
-        BnCancel=findViewById(R.id.BnCancel);
+        TeEvent=findViewById(R.id.TeEvent);
+        TvDate=findViewById(R.id.TvDate);
+        TeDate=findViewById(R.id.TeDate);
+        IbBants=findViewById(R.id.IbBants);
+        BAdd=findViewById(R.id.BAdd);
+        BaCancel=findViewById(R.id.BaCancel);
 
-        IbClothes.setOnClickListener(new View.OnClickListener() {
+        //Add Image
+        IbBants.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent m= new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -59,7 +59,7 @@ public class AddItem extends AppCompatActivity
             }
         });
 
-        BnAdd.setOnClickListener(new View.OnClickListener()
+        BAdd.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v) {
@@ -67,11 +67,11 @@ public class AddItem extends AppCompatActivity
 
             }
         });
-        BnCancel.setOnClickListener(new View.OnClickListener() {
+        BaCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
-                Intent i =new Intent(AddItem.this,MainActivity.class);
+                Intent i =new Intent(AddBants.this,MainActivity.class);
                 startActivity(i);
 
             }
@@ -81,14 +81,14 @@ public class AddItem extends AppCompatActivity
     private void checkAndSave()
     {
 
-        String event=EdEvent.getText().toString();
-        String date=EdDate.getText().toString();
-        String type=EdType.getText().toString();
+        String eventBants=TeEvent.getText().toString();
+        String dateBants=TeDate.getText().toString();
+        ImageView imageBants=IbBants;
 
-        ClothesItem item=new ClothesItem();
-        item.setEvent(event);
-        item.setDate(date);
-        item.setType(type);
+        Bants item=new Bants();
+        item.setEvent(eventBants);
+        item.setDate(dateBants);
+        item.setImage(imageBants);
 
         //استخراج الرقم المميز للمستخدم UID
         //                                          مستخدم مسبق
@@ -113,11 +113,11 @@ public class AddItem extends AppCompatActivity
                         if (task.isSuccessful())
                         {
                             finish();
-                            Toast.makeText(AddItem.this, "Added Succesfully", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AddBants.this, "Added Succesfully", Toast.LENGTH_SHORT).show();
                         }
                         else
                         {
-                            Toast.makeText(AddItem.this, "Add Failled", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AddBants.this, "Add Failled", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -133,8 +133,9 @@ public class AddItem extends AppCompatActivity
         if (resultCode == RESULT_OK && data != null)
         {
             Uri selectedImage = data.getData();
-            ImageView imageView=findViewById(R.id.imageView);
+            ImageView imageView=findViewById(R.id.IVtshirt);
             imageView.setImageURI(selectedImage);
+
         }
     }
 }

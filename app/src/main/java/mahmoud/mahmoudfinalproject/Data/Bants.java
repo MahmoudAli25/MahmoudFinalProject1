@@ -1,8 +1,12 @@
 package mahmoud.mahmoudfinalproject.Data;
+
+import android.net.Uri;
+import android.widget.ImageView;
+
 /**
  * فىه تصف مهمه بادارت المهمات
  */
-public class ClothesItem
+public class Bants
 {
     /**
      * رقم مميز يتم النتاجه من قبل الخادم
@@ -10,23 +14,23 @@ public class ClothesItem
     private String Key;
     private String Event;
     private String Date;
-    private String Type;
     private String Color;
     private String Owner;
     private  int Important;
+    private ImageView Image;
 
-    public ClothesItem()
+    public Bants()
     {
 
     }
 
     //get
-
-
     public int getImportant()
     {
         return Important;
     }
+
+    public ImageView getImage() {return Image;}
 
     public String getKey()
     {
@@ -41,11 +45,6 @@ public class ClothesItem
     public String getDate()
     {
         return Date;
-    }
-
-    public String getType()
-    {
-        return Type;
     }
 
     public String getColor()
@@ -64,7 +63,7 @@ public class ClothesItem
         Key = key;
     }
 
-
+    public void setImage(ImageView image){Image = image;}
 
     public void setImportant(int important)
     {
@@ -81,10 +80,6 @@ public class ClothesItem
         Date = date;
     }
 
-    public void setType(String type)
-    {
-        Type = type;
-    }
 
     public void setColor(String color)
     {
@@ -98,15 +93,14 @@ public class ClothesItem
 
     @Override
     public String toString() {
-        return "ClothesItem{" +
+        return "Bants{" +
                 "Key='" + Key + '\'' +
                 ", Event='" + Event + '\'' +
                 ", Date='" + Date + '\'' +
-                ", Type='" + Type + '\'' +
                 ", Color='" + Color + '\'' +
                 ", Owner='" + Owner + '\'' +
                 ", Important='" + Important + '\'' +
-
+                ", Image='" + Image + '\'' +
                 '}';
     }
 }

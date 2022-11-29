@@ -6,7 +6,7 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/IVtshirt"
         android:layout_width="303dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
