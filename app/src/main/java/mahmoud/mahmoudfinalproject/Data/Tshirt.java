@@ -1,6 +1,5 @@
 package mahmoud.mahmoudfinalproject.Data;
 
-import android.net.Uri;
 import android.widget.ImageView;
 
 /**
@@ -17,7 +16,7 @@ public class Tshirt
     private String Color;
     private String Owner;
     private  int Important;
-    private ImageView Image;
+    private String Image;
 
     public Tshirt()
     {
@@ -29,8 +28,6 @@ public class Tshirt
     {
         return Important;
     }
-
-    public ImageView getImage() {return Image;}
 
     public String getKey()
     {
@@ -63,7 +60,10 @@ public class Tshirt
         Key = key;
     }
 
-    public void setImage(ImageView image){Image = image;}
+    public void setImage(String image)
+    {
+        Image = image;
+    }
 
     public void setImportant(int important)
     {

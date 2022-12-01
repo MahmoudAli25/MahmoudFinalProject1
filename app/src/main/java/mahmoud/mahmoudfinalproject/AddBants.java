@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -21,7 +20,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
 import mahmoud.mahmoudfinalproject.Data.Bants;
-import mahmoud.mahmoudfinalproject.Data.Tshirt;
 
 public class AddBants extends AppCompatActivity
 {
@@ -46,7 +44,7 @@ public class AddBants extends AppCompatActivity
         TeEvent=findViewById(R.id.TeEvent);
         TvDate=findViewById(R.id.TvDate);
         TeDate=findViewById(R.id.TeDate);
-        IbBants=findViewById(R.id.IbBants);
+        IbBants=findViewById(R.id.IbTshirt);
         BAdd=findViewById(R.id.BAdd);
         BaCancel=findViewById(R.id.BaCancel);
 

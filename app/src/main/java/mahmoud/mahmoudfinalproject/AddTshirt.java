@@ -3,10 +3,14 @@ package mahmoud.mahmoudfinalproject;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,20 +20,42 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.StorageTask;
+import com.google.firebase.storage.UploadTask;
+
+import java.util.UUID;
 
 import mahmoud.mahmoudfinalproject.Data.Tshirt;
 
 public class AddTshirt extends AppCompatActivity {
+    private static final int PERMISSION_CODE = 101;
+    private static final int IMAGE_PICK_CODE = 100;
+
+
     private TextInputEditText EdEvent;//عنوان
     private TextView TDate;
     private EditText EdDate;//التاريخ
-    private ImageButton IbClothes;//رفع صوره
+    private ImageButton IbTshirt;//رفع صوره
     private Button BnAdd;
     private Button BnCancel;
+    private Button BnUpload;
+    private Uri filePath;
+    private Uri toUploadimageUri;
+    private Uri downladuri;
+    StorageTask uploadTshirt;
+    private Tshirt t;
+
+    public AddTshirt() {
+    }
 
 
     @Override
@@ -40,23 +66,52 @@ public class AddTshirt extends AppCompatActivity {
         EdEvent = findViewById(R.id.TeEvent);
         TDate = findViewById(R.id.TvDate);
         EdDate = findViewById(R.id.TeDate);
-        IbClothes = findViewById(R.id.IbBants);
         BnAdd = findViewById(R.id.BAdd);
         BnCancel = findViewById(R.id.BaCancel);
 
-        //Add Image
-        IbClothes.setOnClickListener(new View.OnClickListener() {
+        //upload: 3
+        IbTshirt = findViewById(R.id.IbTshirt);
+        BnUpload = findViewById(R.id.BnUpload);
+        SharedPreferences preferences = getSharedPreferences("mypref", MODE_PRIVATE);
+        String key = preferences.getString("key", "");
+        if (key.length() == 0) {
+            Toast.makeText(this, "No key found", Toast.LENGTH_SHORT).show();
+
+        } else {
+            Toast.makeText(this, "key:" + key, Toast.LENGTH_SHORT).show();
+        }
+
+        //upload: 4
+        IbTshirt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent m = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(m, 3);
+                //check runtime permission
+                Toast.makeText(getApplicationContext(), "image", Toast.LENGTH_SHORT).show();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+                        //permission not granted, request it.
+                        String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE};
+                        //show popup for runtime permission
+                        requestPermissions(permissions, PERMISSION_CODE);
+                    } else {
+                        //permission already granted
+                        pickImageFromGallery();
+                    }
+
+                }
             }
         });
-
+        //upload: 6
+       BnUpload.setOnClickListener(new View.OnClickListener() {
+           @Override
+            public void onClick(View v) {
+                uploadImage();
+            }
+        });
         BnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                checkAndSave();
+                checkAndSave(t);
 
             }
         });
@@ -69,17 +124,71 @@ public class AddTshirt extends AppCompatActivity {
             }
         });
     }
+        //upload: 5
 
-    private void checkAndSave() {
+        private void uploadImage(Uri filePath)
+        {
+
+            if(filePath != null)
+            {
+                final ProgressDialog progressDialog = new ProgressDialog(this);
+                progressDialog.setTitle("Uploading...");
+                progressDialog.show();
+                FirebaseStorage storage= FirebaseStorage.getInstance();
+                StorageReference storageReference = storage.getReference();
+                final StorageReference ref = storageReference.child("images/"+ UUID.randomUUID().toString());
+                uploadTshirt=ref.putFile(filePath)
+                        .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                progressDialog.dismiss();
+                                ref.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Uri> task) {
+                                        downladuri = task.getResult();
+                                        t.setImage(downladuri.toString());
+                                        checkAndSave(t);
+
+                                    }
+                                });
+
+                                Toast.makeText(getApplicationContext(), "Uploaded", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                progressDialog.dismiss();
+                                Toast.makeText(getApplicationContext(), "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                                double progress = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot
+                                        .getTotalByteCount());
+                                progressDialog.setMessage("Uploaded "+(int)progress+"%");
+                            }
+                        });
+            }else
+            {
+                t.setImage("");
+                checkAndSave(t);
+            }
+        }
+
+
+
+
+    private void checkAndSave(Tshirt t) {
 
         String event = EdEvent.getText().toString();
         String date = EdDate.getText().toString();
-        ImageView image = IbClothes;
 
         Tshirt item = new Tshirt();
         item.setEvent(event);
         item.setDate(date);
-        item.setImage(image);
 
         //استخراج الرقم المميز للمستخدم UID
         //                                          مستخدم مسبق
@@ -107,18 +216,41 @@ public class AddTshirt extends AppCompatActivity {
                         }
                     }
                 });
-
-
+    }
+    private void pickImageFromGallery(){
+        //intent to pick image
+        Intent intent=new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");
+        startActivityForResult(intent,IMAGE_PICK_CODE);
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && data != null) {
-            Uri selectedImage = data.getData();
-            ImageView imageView = findViewById(R.id.IVtshirt);
-            imageView.setImageURI(selectedImage);
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case PERMISSION_CODE: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    //permission was granted
+                    pickImageFromGallery();
+                } else {
+                    //permission was denied
+                    Toast.makeText(this, "Permission denied...!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+    }
+    //handle result of picked images
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode,resultCode,data);
+        if (resultCode==RESULT_OK && requestCode== IMAGE_PICK_CODE)
+        {
+            //set image to image view
+            toUploadimageUri = data.getData();
+            IbTshirt.setImageURI(toUploadimageUri);
         }
     }
 }
+
+

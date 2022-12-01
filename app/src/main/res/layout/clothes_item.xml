@@ -24,8 +24,8 @@
             android:layout_height="32dp"
             android:layout_weight="1"
             android:hint="date"
-            android:textColor="#EFEFEF"
-            android:textColorHint="#FFFFFF" />
+            android:textColor="#040404"
+            android:textColorHint="#0E0E0E" />
 
         <TextView
             android:id="@+id/TvEvent"
