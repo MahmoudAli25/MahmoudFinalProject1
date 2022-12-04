@@ -15,7 +15,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,9 +40,9 @@ public class AddTshirt extends AppCompatActivity {
     private static final int IMAGE_PICK_CODE = 100;
 
 
-    private TextInputEditText EdEvent;//عنوان
-    private TextView TDate;
-    private EditText EdDate;//التاريخ
+    private TextInputEditText TeEvent;//عنوان
+    private TextView TvDate;
+    private TextInputEditText TeDate;//التاريخ
     private ImageButton IbTshirt;//رفع صوره
     private Button BnAdd;
     private Button BnCancel;
@@ -63,15 +62,15 @@ public class AddTshirt extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_tshirt);
 
-        EdEvent = findViewById(R.id.TeEvent);
-        TDate = findViewById(R.id.TvDate);
-        EdDate = findViewById(R.id.TeDate);
+        TeEvent = findViewById(R.id.TeEvent);
+        TvDate = findViewById(R.id.TvDate);
+        TeDate = findViewById(R.id.TeDate);
         BnAdd = findViewById(R.id.BAdd);
         BnCancel = findViewById(R.id.BaCancel);
 
         //upload: 3
-        IbTshirt = findViewById(R.id.IbTshirt);
-        BnUpload = findViewById(R.id.BnUpload);
+        IbTshirt = findViewById(R.id.IbBants);
+        BnUpload = findViewById(R.id.BnUploadB);
         SharedPreferences preferences = getSharedPreferences("mypref", MODE_PRIVATE);
         String key = preferences.getString("key", "");
         if (key.length() == 0) {
@@ -104,10 +103,12 @@ public class AddTshirt extends AppCompatActivity {
         //upload: 6
        BnUpload.setOnClickListener(new View.OnClickListener() {
            @Override
-            public void onClick(View v) {
-                uploadImage();
-            }
+            public void onClick(View v)
+           {
+                uploadImage(toUploadimageUri);
+           }
         });
+
         BnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -125,7 +126,6 @@ public class AddTshirt extends AppCompatActivity {
         });
     }
         //upload: 5
-
         private void uploadImage(Uri filePath)
         {
 
@@ -183,8 +183,8 @@ public class AddTshirt extends AppCompatActivity {
 
     private void checkAndSave(Tshirt t) {
 
-        String event = EdEvent.getText().toString();
-        String date = EdDate.getText().toString();
+        String event = TeEvent.getText().toString();
+        String date = TeDate.getText().toString();
 
         Tshirt item = new Tshirt();
         item.setEvent(event);

@@ -17,7 +17,7 @@ public class Bants
     private String Color;
     private String Owner;
     private  int Important;
-    private ImageView Image;
+    private String Image;
 
     public Bants()
     {
@@ -30,7 +30,7 @@ public class Bants
         return Important;
     }
 
-    public ImageView getImage() {return Image;}
+    public String getImage() {return Image;}
 
     public String getKey()
     {
@@ -63,7 +63,7 @@ public class Bants
         Key = key;
     }
 
-    public void setImage(ImageView image){Image = image;}
+    public void setImage(String image){Image = image;}
 
     public void setImportant(int important)
     {
