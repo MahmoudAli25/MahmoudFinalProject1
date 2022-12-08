@@ -131,9 +131,9 @@ public class AddTshirt extends AppCompatActivity {
 
             if(filePath != null)
             {
-                final ProgressDialog progressDialog = new ProgressDialog(this);
-                progressDialog.setTitle("Uploading...");
-                progressDialog.show();
+                final ProgressDialog progressDialog = new ProgressDialog(this);//بناء دايلوج من نوع اخر
+                progressDialog.setTitle("Uploading...");//عنوان الدايلوج
+                progressDialog.show();//اظهار الدايلوج
                 FirebaseStorage storage= FirebaseStorage.getInstance();
                 StorageReference storageReference = storage.getReference();
                 final StorageReference ref = storageReference.child("images/"+ UUID.randomUUID().toString());
@@ -142,10 +142,11 @@ public class AddTshirt extends AppCompatActivity {
 
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                progressDialog.dismiss();
+                                progressDialog.dismiss();//رفض او الغاء الدايلوج
                                 ref.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
                                     @Override
-                                    public void onComplete(@NonNull Task<Uri> task) {
+                                    public void onComplete(@NonNull Task<Uri> task)
+                                    {
                                         downladuri = task.getResult();
                                         t.setImage(downladuri.toString());
                                         checkAndSave(t);

@@ -65,17 +65,17 @@ public class AddBants extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_bants);
 
-        TeEvent=findViewById(R.id.TeEvent);
+        TeEvent=findViewById(R.id.TeEvent);//الحدث
         TVevent=findViewById(R.id.TVevent);
         TvDate=findViewById(R.id.TvDate);
-        TeDate=findViewById(R.id.TeDate);
+        TeDate=findViewById(R.id.TeDate);//تاريخ
         BAdd=findViewById(R.id.BAdd);
         BaCancel=findViewById(R.id.BaCancel);
 
         //upload: 3
         IbBants=findViewById(R.id.IbBants);
         BnUploadB = findViewById(R.id.BnUploadB);
-        SharedPreferences preferences = getSharedPreferences("mypref", MODE_PRIVATE);
+        SharedPreferences preferences = getSharedPreferences("mypref", MODE_PRIVATE);//*********************
         String key = preferences.getString("key", "");
         if (key.length() == 0) {
             Toast.makeText(this, "No key found", Toast.LENGTH_SHORT).show();
@@ -143,9 +143,9 @@ public class AddBants extends AppCompatActivity
 
         if(filePath != null)
         {
-            final ProgressDialog progressDialog = new ProgressDialog(this);
-            progressDialog.setTitle("Uploading...");
-            progressDialog.show();
+            final ProgressDialog progressDialog = new ProgressDialog(this);//بناء دايلوج من نوع اخر
+            progressDialog.setTitle("Uploading...");//هذا ما يحتويه الدايلوج
+            progressDialog.show();//اظهار الدايلوج
             FirebaseStorage storage= FirebaseStorage.getInstance();
             StorageReference storageReference = storage.getReference();
             final StorageReference ref = storageReference.child("images/"+ UUID.randomUUID().toString());
@@ -154,7 +154,7 @@ public class AddBants extends AppCompatActivity
 
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            progressDialog.dismiss();
+                            progressDialog.dismiss();//الغاء الدايلوج او رفضه
                             ref.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Uri> task) {
@@ -180,7 +180,7 @@ public class AddBants extends AppCompatActivity
                         public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
                             double progress = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot
                                     .getTotalByteCount());
-                            progressDialog.setMessage("Uploaded "+(int)progress+"%");
+                            progressDialog.setMessage("Uploaded "+(int)progress+"%");//يعرض بالدايلوج
                         }
                     });
         }else
