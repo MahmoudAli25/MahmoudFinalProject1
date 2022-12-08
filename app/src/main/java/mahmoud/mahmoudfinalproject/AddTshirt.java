@@ -13,8 +13,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,7 +40,9 @@ public class AddTshirt extends AppCompatActivity {
     private static final int IMAGE_PICK_CODE = 100;
 
 
+
     private TextInputEditText TeEvent;//عنوان
+    private RatingBar RbImportant;
     private TextView TvDate;
     private TextInputEditText TeDate;//التاريخ
     private ImageButton IbTshirt;//رفع صوره
@@ -50,10 +52,11 @@ public class AddTshirt extends AppCompatActivity {
     private Uri filePath;
     private Uri toUploadimageUri;
     private Uri downladuri;
-    StorageTask uploadTshirt;
-    private Tshirt t;
+    StorageTask UploadTshirt;
+    private Tshirt t= new Tshirt();
 
-    public AddTshirt() {
+    public AddTshirt()
+    {
     }
 
 
@@ -65,6 +68,7 @@ public class AddTshirt extends AppCompatActivity {
         TeEvent = findViewById(R.id.TeEvent);
         TvDate = findViewById(R.id.TvDate);
         TeDate = findViewById(R.id.TeDate);
+        RbImportant=findViewById(R.id.RbImportant);
         BnAdd = findViewById(R.id.BAdd);
         BnCancel = findViewById(R.id.BaCancel);
 
@@ -111,9 +115,9 @@ public class AddTshirt extends AppCompatActivity {
 
         BnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                checkAndSave(t);
-
+            public void onClick(View v)
+            {
+                datapick();
             }
         });
         BnCancel.setOnClickListener(new View.OnClickListener() {
@@ -137,7 +141,7 @@ public class AddTshirt extends AppCompatActivity {
                 FirebaseStorage storage= FirebaseStorage.getInstance();
                 StorageReference storageReference = storage.getReference();
                 final StorageReference ref = storageReference.child("images/"+ UUID.randomUUID().toString());
-                uploadTshirt=ref.putFile(filePath)
+                UploadTshirt=ref.putFile(filePath)
                         .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
 
                             @Override
@@ -179,34 +183,55 @@ public class AddTshirt extends AppCompatActivity {
             }
         }
 
+    private void datapick()
+    {
+        boolean isok=true;
+        String event=TeEvent.getText().toString();
+        String date=TeDate.getText().toString();
+        int important=RbImportant.getProgress();
+//        if(text.length()==0)
+//        {
+//            etText.setError("Text can not be empty");
+//            isok=false;
+//
+//       }
+
+        if(isok)
+        {
+
+            t.setDate(date);
+            t.setEvent(event);
+            t.setImportant(important);
+            //creatTshirt(t);
+           if(UploadTshirt!=null || (UploadTshirt!=null && UploadTshirt.isInProgress()))
+           {
+            Toast.makeText(this, " UploadTshirt.isInProgress(", Toast.LENGTH_SHORT).show();
+           }
+           else
+               uploadImage(toUploadimageUri);
+    }
+}
 
 
-
-    private void checkAndSave(Tshirt t) {
-
-        String event = TeEvent.getText().toString();
-        String date = TeDate.getText().toString();
-
-        Tshirt item = new Tshirt();
-        item.setEvent(event);
-        item.setDate(date);
+    private void checkAndSave(Tshirt t)
+    {
 
         //استخراج الرقم المميز للمستخدم UID
         //                                          مستخدم مسبق
         String owner = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        item.setOwner(owner);
+        t.setOwner(owner);
         //استخراج الرقم المميز للمهمه
         String key = FirebaseDatabase.getInstance().getReference().
                 child("ClothesItem").
                 //اضافة قيمه جديده
                         child(owner).push().getKey();
-        item.setKey(key);
+        t.setKey(key);
         //عنوان جذر قاعدة البيانات
         FirebaseDatabase.getInstance().getReference().
                 child("ClothesItem").
                 child(owner).
                 child(key).
-                setValue(item).addOnCompleteListener(new OnCompleteListener<Void>() {
+                setValue(t).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
@@ -218,6 +243,8 @@ public class AddTshirt extends AppCompatActivity {
                     }
                 });
     }
+
+
     private void pickImageFromGallery(){
         //intent to pick image
         Intent intent=new Intent(Intent.ACTION_PICK);

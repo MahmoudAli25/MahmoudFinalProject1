@@ -60,10 +60,6 @@ public class Tshirt
         Key = key;
     }
 
-    public void setImage(String image)
-    {
-        Image = image;
-    }
 
     public void setImportant(int important)
     {
@@ -103,4 +99,13 @@ public class Tshirt
                 ", Image='" + Image + '\'' +
                 '}';
     }
+
+    public void setImage(String image) {
+        this.Image = image;
+    }
+
+    public String getImage() {
+        return Image;
+    }
 }
+

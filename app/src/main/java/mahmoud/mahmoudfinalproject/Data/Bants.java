@@ -30,7 +30,6 @@ public class Bants
         return Important;
     }
 
-    public String getImage() {return Image;}
 
     public String getKey()
     {
@@ -63,7 +62,6 @@ public class Bants
         Key = key;
     }
 
-    public void setImage(String image){Image = image;}
 
     public void setImportant(int important)
     {
@@ -102,5 +100,12 @@ public class Bants
                 ", Important='" + Important + '\'' +
                 ", Image='" + Image + '\'' +
                 '}';
+    }
+  public void setImage(String image) {
+    this.Image = image;
+}
+
+    public String getImage() {
+        return Image;
     }
 }

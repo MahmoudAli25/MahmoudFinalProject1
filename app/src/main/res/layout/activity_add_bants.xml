@@ -59,6 +59,14 @@
       android:layout_height="wrap_content"
       android:backgroundTint="#635F5F"
       android:text="Upload" />
+
+  <RatingBar
+      android:id="@+id/RbImportantB"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:max="5"
+      android:numStars="5" />
+
   <Button
       android:layout_marginTop="60dp"
       android:id="@+id/BAdd"

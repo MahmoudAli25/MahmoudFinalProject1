@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +35,7 @@ import com.google.firebase.storage.UploadTask;
 import java.util.UUID;
 
 import mahmoud.mahmoudfinalproject.Data.Bants;
+import mahmoud.mahmoudfinalproject.Data.Tshirt;
 
 public class AddBants extends AppCompatActivity
 {
@@ -43,6 +45,7 @@ public class AddBants extends AppCompatActivity
     private TextInputEditText TeEvent;//عنوان
     private TextView TVevent;
     private TextView TvDate;
+    private RatingBar RbImportantB;
     private TextInputEditText TeDate;//التاريخ
     private ImageButton IbBants;//رفع صوره
     private Button BnUploadB;//رفع الصوره
@@ -67,6 +70,7 @@ public class AddBants extends AppCompatActivity
 
         TeEvent=findViewById(R.id.TeEvent);//الحدث
         TVevent=findViewById(R.id.TVevent);
+        RbImportantB=findViewById(R.id.RbImportantB);
         TvDate=findViewById(R.id.TvDate);
         TeDate=findViewById(R.id.TeDate);//تاريخ
         BAdd=findViewById(R.id.BAdd);
@@ -122,7 +126,7 @@ public class AddBants extends AppCompatActivity
         {
             @Override
             public void onClick(View v) {
-                checkAndSave(b);
+                Bantsdatapick();
 
             }
         });
@@ -189,32 +193,53 @@ public class AddBants extends AppCompatActivity
             checkAndSave(b);
         }
     }
+
+    private void Bantsdatapick()
+    {
+        boolean isok=true;
+        String event=TeEvent.getText().toString();
+        String date=TeDate.getText().toString();
+        int important=RbImportantB.getProgress();
+//        if(text.length()==0)
+//        {
+//            etText.setError("Text can not be empty");
+//            isok=false;
+//
+//       }
+        if(isok)
+        {
+            b=new Bants();
+            b.setDate(date);
+            b.setEvent(event);
+            b.setImportant(important);
+            //creatBants(b);
+            if(uploadBants!=null || (uploadBants!=null && uploadBants.isInProgress()))
+            {
+                Toast.makeText(this, " UploadBants.isInProgress(", Toast.LENGTH_SHORT).show();
+            }
+            else
+                uploadImage(toUploadimageUri);
+        }
+    }
+
     private void checkAndSave(Bants b)
     {
-
-        String eventBants=TeEvent.getText().toString();
-        String dateBants=TeDate.getText().toString();
-
-        Bants item=new Bants();
-        item.setEvent(eventBants);
-        item.setDate(dateBants);
-
         //استخراج الرقم المميز للمستخدم UID
         //                                          مستخدم مسبق
         String owner = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        item.setOwner(owner);
+        b.setOwner(owner);
         //استخراج الرقم المميز للمهمه
         String key = FirebaseDatabase.getInstance().getReference().
                 child("ClothesItem").
                 //اضافة قيمه جديده
                         child(owner).push().getKey();
-        item.setKey(key);
+        b.setKey(key);
         //عنوان جذر قاعدة البيانات
         FirebaseDatabase.getInstance().getReference().
                 child("ClothesItem").
                 child(owner).
                 child(key).
-                setValue(item).addOnCompleteListener(new OnCompleteListener<Void>()
+                setValue(b).addOnCompleteListener(new OnCompleteListener<Void>()
                 {
                     @Override
                     public void onComplete(@NonNull Task<Void> task)
