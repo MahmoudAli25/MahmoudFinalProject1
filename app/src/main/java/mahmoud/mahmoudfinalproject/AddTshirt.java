@@ -207,8 +207,8 @@ public class AddTshirt extends AppCompatActivity {
            {
             Toast.makeText(this, " UploadTshirt.isInProgress(", Toast.LENGTH_SHORT).show();
            }
-           else
-               uploadImage(toUploadimageUri);
+           //else
+            uploadImage(toUploadimageUri);
     }
 }
 
@@ -251,9 +251,7 @@ public class AddTshirt extends AppCompatActivity {
         intent.setType("image/*");
         startActivityForResult(intent,IMAGE_PICK_CODE);
     }
-    private void gitImage(){
 
-    }
 
 
     @Override

@@ -1,4 +1,5 @@
 package mahmoud.mahmoudfinalproject.Data;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,9 +14,9 @@ import androidx.annotation.NonNull;
 import mahmoud.mahmoudfinalproject.R;
 
 //                                   وسيط من نوع ملابس فقط
-public class ClothesAdapter extends ArrayAdapter<Tshirt>
+public class BantsAdabter extends ArrayAdapter<Bants>
 {
-    public ClothesAdapter(@NonNull Context context)
+    public BantsAdabter(@NonNull Context context)
     {
         super(context, R.layout.clothes_item);
 
@@ -32,15 +33,14 @@ public class ClothesAdapter extends ArrayAdapter<Tshirt>
 
 
         //getting data source
-        final Tshirt tshirt =getItem(position);
+        final Bants bants =getItem(position);
 
         //استخراج القيم من الحقول
-        EtDate.setText(tshirt.getDate());
-        TvEvent.setText(tshirt.getEvent());
-        RbCl.setRating(tshirt.getImportant());
+        EtDate.setText(bants.getDate());
+        TvEvent.setText(bants.getEvent());
+        RbCl.setRating(bants.getImportant());
         CbWore.setChecked(false);
 
         return vitem;
     }
-
 }
