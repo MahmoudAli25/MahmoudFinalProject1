@@ -251,6 +251,9 @@ public class AddTshirt extends AppCompatActivity {
         intent.setType("image/*");
         startActivityForResult(intent,IMAGE_PICK_CODE);
     }
+    private void gitImage(){
+
+    }
 
 
     @Override
