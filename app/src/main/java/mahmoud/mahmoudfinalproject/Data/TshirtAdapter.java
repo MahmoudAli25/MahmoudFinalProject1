@@ -1,5 +1,4 @@
 package mahmoud.mahmoudfinalproject.Data;
-
 import android.content.Context;
 import android.net.Uri;
 import android.view.LayoutInflater;
@@ -25,10 +24,10 @@ import java.io.IOException;
 
 import mahmoud.mahmoudfinalproject.R;
 
-//                                وسيط من نوع ملابس فقط
-public class BantsAdapter extends ArrayAdapter<Bants>
+//                                   وسيط من نوع ملابس فقط
+public class TshirtAdapter extends ArrayAdapter<Tshirt>
 {
-    public BantsAdapter(@NonNull Context context)
+    public TshirtAdapter(@NonNull Context context)
     {
         super(context, R.layout.clothes_item);
 
@@ -47,13 +46,14 @@ public class BantsAdapter extends ArrayAdapter<Bants>
 
 
         //getting data source
-        final Bants bants =getItem(position);
-        downloadImageToLocalFile(bants.getImage(),imageView);   //connect item view to data source
+        final Tshirt tshirt =getItem(position);
+        downloadImageToLocalFile(tshirt.getImage(),imageView);   //connect item view to data source
+
 
         //استخراج القيم من الحقول
-        EtDate.setText(bants.getDate());
-        TvEvent.setText(bants.getEvent());
-        RbCl.setRating(bants.getImportant());
+        EtDate.setText(tshirt.getDate());
+        TvEvent.setText(tshirt.getEvent());
+        RbCl.setRating(tshirt.getImportant());
         CbWore.setChecked(false);
 
         return vitem;
@@ -86,4 +86,5 @@ public class BantsAdapter extends ArrayAdapter<Bants>
             e.printStackTrace();
         }
     }
+
 }

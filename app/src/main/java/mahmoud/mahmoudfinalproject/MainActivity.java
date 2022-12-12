@@ -21,7 +21,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import mahmoud.mahmoudfinalproject.Data.ClothesAdapter;
+import mahmoud.mahmoudfinalproject.Data.Bants;
+import mahmoud.mahmoudfinalproject.Data.TshirtAdapter;
+import mahmoud.mahmoudfinalproject.Data.BantsAdapter;
 import mahmoud.mahmoudfinalproject.Data.Tshirt;
 
 /**
@@ -33,7 +35,8 @@ public class MainActivity extends AppCompatActivity
     ImageButton IAItem;//لاضافة مهمه جديده الى القائمه
     ListView ListItem;//قائمة عرض المهم
     //3.1 تجهيز الوسيط
-    ClothesAdapter clothesAdapter;
+    TshirtAdapter tshirtAdapter;
+    BantsAdapter bantsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -41,7 +44,8 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);//نوع الشاشه افقي او عامودي
         //3.2 بناء الوسيط
-        clothesAdapter= new ClothesAdapter(getApplicationContext());
+        tshirtAdapter= new TshirtAdapter(getApplicationContext());
+        bantsAdapter= new BantsAdapter(getApplicationContext());
 
 
         SItem = findViewById(R.id.SItem);
@@ -49,7 +53,8 @@ public class MainActivity extends AppCompatActivity
         //تجهيز مؤشر لقائمة العرض
         ListItem = findViewById(R.id.ListItem);
 
-        ListItem.setAdapter(clothesAdapter);
+        ListItem.setAdapter(tshirtAdapter);
+        ListItem.setAdapter(bantsAdapter);
         //تشغيل مراقب لاي تغيير على قاعدة البيانات
         //ويقوم بتنظيف المعطيات الموجوده وتنزيل المعلومات الجديده
 
@@ -141,13 +146,16 @@ public class MainActivity extends AppCompatActivity
              */
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                clothesAdapter.clear();
+                tshirtAdapter.clear();
+                bantsAdapter.clear();
 
                 //يمحا كل اشي بداخله
                 for (DataSnapshot d : snapshot.getChildren())//d يمر على جميع قيم مبنى المعطيات
                 {
                     Tshirt m = d.getValue(Tshirt.class);//استخراج الكاىن المحفوظ
-                    clothesAdapter.add(m);//اضافة الكائن للوسيط
+                    Bants b =d.getValue(Bants.class);
+                    tshirtAdapter.add(m);//اضافة الكائن للوسيط
+                    bantsAdapter.add(b);
                 }
             }
 
