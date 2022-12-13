@@ -77,10 +77,13 @@ public class AddTshirt extends AppCompatActivity {
         BnUpload = findViewById(R.id.BnUploadB);
         SharedPreferences preferences = getSharedPreferences("mypref", MODE_PRIVATE);
         String key = preferences.getString("key", "");
-        if (key.length() == 0) {
+        if (key.length() == 0)
+        {
             Toast.makeText(this, "No key found", Toast.LENGTH_SHORT).show();
 
-        } else {
+        }
+        else
+        {
             Toast.makeText(this, "key:" + key, Toast.LENGTH_SHORT).show();
         }
 
@@ -223,12 +226,14 @@ public class AddTshirt extends AppCompatActivity {
         //استخراج الرقم المميز للمهمه
         String key = FirebaseDatabase.getInstance().getReference().
                 child("ClothesItem").
+                child("Tshirt").
                 //اضافة قيمه جديده
                         child(owner).push().getKey();
         t.setKey(key);
         //عنوان جذر قاعدة البيانات
         FirebaseDatabase.getInstance().getReference().
                 child("ClothesItem").
+                child("Tshirt").
                 child(owner).
                 child(key).
                 setValue(t).addOnCompleteListener(new OnCompleteListener<Void>() {

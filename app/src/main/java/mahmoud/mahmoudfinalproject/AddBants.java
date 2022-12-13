@@ -231,12 +231,14 @@ public class AddBants extends AppCompatActivity
         //استخراج الرقم المميز للمهمه
         String key = FirebaseDatabase.getInstance().getReference().
                 child("ClothesItem").
+                child("Bants").
                 //اضافة قيمه جديده
                         child(owner).push().getKey();
         b.setKey(key);
         //عنوان جذر قاعدة البيانات
         FirebaseDatabase.getInstance().getReference().
                 child("ClothesItem").
+                child("Bants").
                 child(owner).
                 child(key).
                 setValue(b).addOnCompleteListener(new OnCompleteListener<Void>()
