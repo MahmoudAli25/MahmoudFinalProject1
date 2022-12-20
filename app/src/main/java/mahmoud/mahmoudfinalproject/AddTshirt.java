@@ -192,12 +192,7 @@ public class AddTshirt extends AppCompatActivity {
         String event=TeEvent.getText().toString();
         String date=TeDate.getText().toString();
         int important=RbImportant.getProgress();
-//        if(text.length()==0)
-//        {
-//            etText.setError("Text can not be empty");
-//            isok=false;
-//
-//       }
+
 
         if(isok)
         {
@@ -210,8 +205,7 @@ public class AddTshirt extends AppCompatActivity {
            {
             Toast.makeText(this, " UploadTshirt.isInProgress(", Toast.LENGTH_SHORT).show();
            }
-           //else
-            uploadImage(toUploadimageUri);
+           uploadImage(toUploadimageUri);
     }
 }
 
