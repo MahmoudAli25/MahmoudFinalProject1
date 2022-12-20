@@ -71,10 +71,10 @@ public class AddTshirt extends AppCompatActivity {
         RbImportant=findViewById(R.id.RbImportant);
         BnAdd = findViewById(R.id.BAdd);
         BnCancel = findViewById(R.id.BaCancel);
-
         //upload: 3
         IbTshirt = findViewById(R.id.IbBants);
         BnUpload = findViewById(R.id.BnUploadB);
+
         SharedPreferences preferences = getSharedPreferences("mypref", MODE_PRIVATE);
         String key = preferences.getString("key", "");
         if (key.length() == 0)
@@ -163,19 +163,23 @@ public class AddTshirt extends AppCompatActivity {
 
                                 Toast.makeText(getApplicationContext(), "Uploaded", Toast.LENGTH_SHORT).show();
                             }
+
                         })
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
                                 progressDialog.dismiss();
+                                //اظهار دايلوج مكتوب فيه انه لم يعمل
                                 Toast.makeText(getApplicationContext(), "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         })
+
                         .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                             @Override
                             public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
                                 double progress = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot
                                         .getTotalByteCount());
+                                //اظهار دايلوج انه يعمل
                                 progressDialog.setMessage("Uploaded "+(int)progress+"%");
                             }
                         });
@@ -192,16 +196,10 @@ public class AddTshirt extends AppCompatActivity {
         String event=TeEvent.getText().toString();
         String date=TeDate.getText().toString();
         int important=RbImportant.getProgress();
-//        if(text.length()==0)
-//        {
-//            etText.setError("Text can not be empty");
-//            isok=false;
-//
-//       }
+
 
         if(isok)
         {
-
             t.setDate(date);
             t.setEvent(event);
             t.setImportant(important);
@@ -210,8 +208,7 @@ public class AddTshirt extends AppCompatActivity {
            {
             Toast.makeText(this, " UploadTshirt.isInProgress(", Toast.LENGTH_SHORT).show();
            }
-           //else
-            uploadImage(toUploadimageUri);
+           uploadImage(toUploadimageUri);
     }
 }
 
