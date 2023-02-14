@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);//نوع الشاشه افقي او عامودي
         //3.2 بناء الوسيط
         tshirtAdapter= new TshirtAdapter(getApplicationContext());
-        bantsAdapter= new BantsAdapter(getApplicationContext());
+        //bantsAdapter= new BantsAdapter(getApplicationContext());
 
 
         SItem = findViewById(R.id.SItem);
@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity
         ListItem = findViewById(R.id.ListItem);
 
         ListItem.setAdapter(tshirtAdapter);
-        ListItem.setAdapter(bantsAdapter);
+        //ListItem.setAdapter(bantsAdapter);
         //تشغيل مراقب لاي تغيير على قاعدة البيانات
         //ويقوم بتنظيف المعطيات الموجوده وتنزيل المعلومات الجديده
 
@@ -147,7 +147,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 tshirtAdapter.clear();
-                bantsAdapter.clear();
+//                bantsAdapter.clear();
 
                 //يمحا كل اشي بداخله
                 for (DataSnapshot d : snapshot.getChildren())//d يمر على جميع قيم مبنى المعطيات

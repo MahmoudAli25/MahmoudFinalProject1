@@ -54,13 +54,6 @@
         android:layout_height="59dp"
         app:srcCompat="@mipmap/ic_launcher_clothes_foreground" />
 
-    <Button
-        android:id="@+id/BnUploadB"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#635F5F"
-        android:text="Upload" />
-
     <RatingBar
         android:id="@+id/RbImportant"
         android:layout_width="match_parent"
@@ -82,5 +75,12 @@
         android:layout_height="wrap_content"
         android:backgroundTint="#635F5F"
         android:text="Cancel" />
+
+    <Button
+        android:id="@+id/BnNext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="next"
+        android:text="Next" />
 
 </LinearLayout>

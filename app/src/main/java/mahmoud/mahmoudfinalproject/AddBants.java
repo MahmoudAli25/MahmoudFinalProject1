@@ -78,7 +78,6 @@ public class AddBants extends AppCompatActivity
 
         //upload: 3
         IbBants=findViewById(R.id.IbBants);
-        BnUploadB = findViewById(R.id.BnUploadB);
         SharedPreferences preferences = getSharedPreferences("mypref", MODE_PRIVATE);//*********************
         String key = preferences.getString("key", "");
         if (key.length() == 0) {

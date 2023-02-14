@@ -7,10 +7,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:layout_gravity="center"
     tools:context=".AddClothes">
 
     <ImageButton
         android:id="@+id/IbShirt"
+
         android:layout_width="match_parent"
         android:layout_height="220dp"
         android:layout_margin="50dp"
@@ -19,6 +21,7 @@
 
     <ImageButton
         android:id="@+id/IbJeans"
+
         android:layout_width="match_parent"
         android:layout_height="220dp"
         android:layout_margin="50dp"

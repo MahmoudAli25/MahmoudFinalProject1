@@ -48,6 +48,7 @@ public class AddTshirt extends AppCompatActivity {
     private ImageButton IbTshirt;//رفع صوره
     private Button BnAdd;
     private Button BnCancel;
+    private Button BnNext;
     private Button BnUpload;
     private Uri filePath;
     private Uri toUploadimageUri;
@@ -67,13 +68,14 @@ public class AddTshirt extends AppCompatActivity {
 
         TeEvent = findViewById(R.id.TeEvent);
         TvDate = findViewById(R.id.TvDate);
+        BnNext=findViewById(R.id.BnNext);
+
         TeDate = findViewById(R.id.TeDate);
         RbImportant=findViewById(R.id.RbImportant);
         BnAdd = findViewById(R.id.BAdd);
         BnCancel = findViewById(R.id.BaCancel);
         //upload: 3
         IbTshirt = findViewById(R.id.IbBants);
-        BnUpload = findViewById(R.id.BnUploadB);
 
         SharedPreferences preferences = getSharedPreferences("mypref", MODE_PRIVATE);
         String key = preferences.getString("key", "");
@@ -107,15 +109,15 @@ public class AddTshirt extends AppCompatActivity {
                 }
             }
         });
-        //upload: 6
-       BnUpload.setOnClickListener(new View.OnClickListener() {
-           @Override
-            public void onClick(View v)
-           {
-                uploadImage(toUploadimageUri);
-           }
+        BnNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent b = new Intent(AddTshirt.this, CheckClothes.class);
+                startActivity(b);
+            }
         });
-
+       //upload: 6
+       //Add
         BnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
@@ -123,6 +125,7 @@ public class AddTshirt extends AppCompatActivity {
                 datapick();
             }
         });
+        //Cancel
         BnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -259,12 +262,17 @@ public class AddTshirt extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode) {
-            case PERMISSION_CODE: {
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+        switch (requestCode)
+        {
+            case PERMISSION_CODE:
+            {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                {
                     //permission was granted
                     pickImageFromGallery();
-                } else {
+                }
+                else
+                {
                     //permission was denied
                     Toast.makeText(this, "Permission denied...!", Toast.LENGTH_SHORT).show();
                 }

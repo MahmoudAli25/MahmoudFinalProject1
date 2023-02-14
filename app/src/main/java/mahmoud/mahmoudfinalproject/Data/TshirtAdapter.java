@@ -58,13 +58,16 @@ public class TshirtAdapter extends ArrayAdapter<Tshirt>
 
         return vitem;
     }
+
+    /**
+     * دالة تقوم بتحميل الصوره الى المكان المخصص لها
+     */
     private void downloadImageToLocalFile(String fileURL, final ImageView toView)
     {
         StorageReference httpsReference = FirebaseStorage.getInstance().getReferenceFromUrl(fileURL);
         final File localFile;
         try {
             localFile = File.createTempFile("images", "jpg");
-
 
             httpsReference.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                 @Override
