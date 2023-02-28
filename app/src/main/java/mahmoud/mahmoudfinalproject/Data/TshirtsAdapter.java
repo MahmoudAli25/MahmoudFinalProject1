@@ -21,43 +21,36 @@ import java.util.List;
 
 import mahmoud.mahmoudfinalproject.R;
 
-public class BantsAdapter extends RecyclerView.Adapter<BantsAdapter.MyViewHolder> {
+public class TshirtsAdapter extends RecyclerView.Adapter<TshirtsAdapter.MyViewHolder> {
 
-    private List<Bants> BantsList;
+    private List<Tshirt> TshirtList;
     ImageView imageView;
     class MyViewHolder extends RecyclerView.ViewHolder
     {
-        MyViewHolder(View view) {
-            super(view);
-            imageView =view.findViewById(R.id.IVtshirt);
-        }
+    MyViewHolder(View view) {
+        super(view);
+        imageView =view.findViewById(R.id.IVtshirt);
     }
-    public BantsAdapter(List<Bants>BantsList)
-    {
-        this.BantsList = BantsList;
     }
-
+    public TshirtsAdapter(List<Tshirt> TshirtList) {
+        this.TshirtList = TshirtList;
+    }
     @NonNull
     @Override
-    public BantsAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
-    {
+    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-            .inflate(R.layout.clothes_item, parent, false);
-                return new BantsAdapter().MyViewHolder(itemView);
+                .inflate(R.layout.clothes_item, parent, false);
+        return new MyViewHolder(itemView);
     }
-
     @Override
-    public void onBindViewHolder(TshirtsAdapter.MyViewHolder holder, int position) {
-    Bants bb = BantsList.get(position);
-    downloadImageToLocalFile(bb.getImage(),imageView);
+    public void onBindViewHolder(MyViewHolder holder, int position) {
+        Tshirt tt = TshirtList.get(position);
+        downloadImageToLocalFile(tt.getImage(),imageView);
     }
-
     @Override
-    public int getItemCount()
-    {
-        return BantsList.size();
+    public int getItemCount() {
+        return TshirtList.size();
     }
-
     private void downloadImageToLocalFile(String fileURL, final ImageView toView)
     {
         StorageReference httpsReference = FirebaseStorage.getInstance().getReferenceFromUrl(fileURL);
@@ -70,14 +63,14 @@ public class BantsAdapter extends RecyclerView.Adapter<BantsAdapter.MyViewHolder
                 @Override
                 public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
                     //تم إنشاء ملف مؤقت محلي
-                    //      Toast.makeText(get, "downloaded Image To Local File", Toast.LENGTH_SHORT).show();
+              //      Toast.makeText(get, "downloaded Image To Local File", Toast.LENGTH_SHORT).show();
                     toView.setImageURI(Uri.fromFile(localFile));
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception exception) {
                     // تعامل مع أي أخطاء
-                    // Toast.makeText(getContext(), "onFailure downloaded Image To Local File "+exception.getMessage(), Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(getContext(), "onFailure downloaded Image To Local File "+exception.getMessage(), Toast.LENGTH_SHORT).show();
                     exception.printStackTrace();
                 }
             });
@@ -87,5 +80,6 @@ public class BantsAdapter extends RecyclerView.Adapter<BantsAdapter.MyViewHolder
         }
     }
 }
+
 
 

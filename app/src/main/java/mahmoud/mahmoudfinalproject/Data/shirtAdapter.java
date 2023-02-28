@@ -1,14 +1,14 @@
-package mahmoud.mahmoudfinalproject;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.annotation.SuppressLint;
+package mahmoud.mahmoudfinalproject.Data;
+import android.content.Context;
 import android.net.Uri;
-import android.os.Bundle;
-import android.widget.HorizontalScrollView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -19,21 +19,41 @@ import com.google.firebase.storage.StorageReference;
 import java.io.File;
 import java.io.IOException;
 
-public class CheckClothes extends AppCompatActivity {
+import mahmoud.mahmoudfinalproject.R;
 
-    private HorizontalScrollView STshirt;
-    private HorizontalScrollView SBants;
-
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState)
+//                                   وسيط من نوع ملابس فقط
+public class shirtAdapter extends ArrayAdapter<Tshirt>
+{
+    public shirtAdapter(@NonNull Context context)
     {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_check_clothes);
+        super(context, R.layout.clothes_item);
 
-        STshirt=findViewById(R.id.STshirt);
-        SBants=findViewById(R.id.SBants);
+    }
+    public View getView(int position, View convertView, ViewGroup parent)
+    {
+        //بناء واجهه لعرض الملابس
+        View vitem= LayoutInflater.from(getContext()).inflate(R.layout.clothes_item,parent,false);
 
+       // TextView EtDate=vitem.findViewById(R.id.EtDate);
+       // TextView TvEvent=vitem.findViewById(R.id.TvEvent);
+        //CheckBox CbWore=vitem.findViewById(R.id.CbWore);
+        //RatingBar RbCl=vitem.findViewById(R.id.RbCl);
+        ImageView imageView =vitem.findViewById(R.id.IVtshirt);
+
+
+
+        //getting data source
+        final Tshirt tshirt =getItem(position);
+        downloadImageToLocalFile(tshirt.getImage(),imageView);   //connect item view to data source
+
+
+        //استخراج القيم من الحقول
+      //  EtDate.setText(tshirt.getDate());
+      //  TvEvent.setText(tshirt.getEvent());
+        //RbCl.setRating(tshirt.getImportant());
+        //CbWore.setChecked(false);
+
+        return vitem;
     }
 
     /**
@@ -66,4 +86,5 @@ public class CheckClothes extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
 }

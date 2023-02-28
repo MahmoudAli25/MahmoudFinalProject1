@@ -92,7 +92,7 @@ public class SignIn extends AppCompatActivity
                     if(task.isSuccessful())//يفحص اذا المهم تمت بنجاح
                     {
                         Toast.makeText(SignIn.this, "Successful", Toast.LENGTH_SHORT).show();//تظهر رساله في الشاشه من الاسفل
-                        Intent i=new Intent(SignIn.this,MainActivity.class);
+                        Intent i=new Intent(SignIn.this,CheckClothe.class);
                         startActivity(i);
                         finish();//يغلق الشاشه الحاليه
                     }
