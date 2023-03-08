@@ -112,7 +112,7 @@ public class AddTshirt extends AppCompatActivity {
         BnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent b = new Intent(AddTshirt.this, CheckClothes.class);
+                Intent b = new Intent(AddTshirt.this, CheckClothe.class);
                 startActivity(b);
             }
         });

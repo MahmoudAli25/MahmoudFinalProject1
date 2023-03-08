@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity
     ListView ListItem;//قائمة عرض المهم
     //3.1 تجهيز الوسيط
     shirtAdapter shirtAdapter;
-    BantsAdapter bantsAdapter;
+    //BantsAdapter bantsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -152,9 +152,9 @@ public class MainActivity extends AppCompatActivity
                 for (DataSnapshot d : snapshot.getChildren())//d يمر على جميع قيم مبنى المعطيات
                 {
                     Tshirt m = d.getValue(Tshirt.class);//استخراج الكاىن المحفوظ
-                    Bants b =d.getValue(Bants.class);
+                    //Bants b =d.getValue(Bants.class);
                     shirtAdapter.add(m);//اضافة الكائن للوسيط
-                    bantsAdapter.add(b);
+                    //bantsAdapter.add(b);
                 }
             }
 

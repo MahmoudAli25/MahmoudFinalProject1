@@ -27,26 +27,31 @@ public class TshirtsAdapter extends RecyclerView.Adapter<TshirtsAdapter.MyViewHo
     ImageView imageView;
     class MyViewHolder extends RecyclerView.ViewHolder
     {
-    MyViewHolder(View view) {
-        super(view);
-        imageView =view.findViewById(R.id.IVtshirt);
-    }
+        MyViewHolder(View view) {
+            super(view);
+            imageView =view.findViewById(R.id.IVtshirt);
+        }
     }
     public TshirtsAdapter(List<Tshirt> TshirtList) {
         this.TshirtList = TshirtList;
     }
     @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
+    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
+    {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.clothes_item, parent, false);
-        return new MyViewHolder(itemView);
+                    return new MyViewHolder(itemView);
     }
+
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(MyViewHolder holder, int position)
+    {
         Tshirt tt = TshirtList.get(position);
         downloadImageToLocalFile(tt.getImage(),imageView);
     }
+
     @Override
     public int getItemCount() {
         return TshirtList.size();

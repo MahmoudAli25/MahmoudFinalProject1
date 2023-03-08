@@ -21,7 +21,8 @@ import java.util.List;
 
 import mahmoud.mahmoudfinalproject.R;
 
-public class BantsAdapter extends RecyclerView.Adapter<BantsAdapter.MyViewHolder> {
+public class BantsAdapter extends RecyclerView.Adapter<BantsAdapter.MyViewHolder>
+{
 
     private List<Bants> BantsList;
     ImageView imageView;
@@ -43,13 +44,14 @@ public class BantsAdapter extends RecyclerView.Adapter<BantsAdapter.MyViewHolder
     {
         View itemView = LayoutInflater.from(parent.getContext())
             .inflate(R.layout.clothes_item, parent, false);
-                return new BantsAdapter().MyViewHolder(itemView);
+                return new BantsAdapter.MyViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(TshirtsAdapter.MyViewHolder holder, int position) {
-    Bants bb = BantsList.get(position);
-    downloadImageToLocalFile(bb.getImage(),imageView);
+    public void onBindViewHolder(BantsAdapter.MyViewHolder holder, int position)
+    {
+        Bants bb = BantsList.get(position);
+        downloadImageToLocalFile(bb.getImage(),imageView);
     }
 
     @Override

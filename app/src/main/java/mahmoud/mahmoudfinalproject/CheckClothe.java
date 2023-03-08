@@ -39,8 +39,9 @@ public class CheckClothe extends AppCompatActivity
 
         recyclerViewTshirt = findViewById(R.id.recyclerViewTshirt);
         recyclerViewBants = findViewById(R.id.recyclerViewBants);
-       
-        ReadClothesItemtFromFireBase();
+
+        ReadTshirtFromFireBase();
+        ReadBantsFromFireBase();
 
         //prepareMovieData();
     }
@@ -50,10 +51,11 @@ public class CheckClothe extends AppCompatActivity
     @Override
     protected void onRestart() {
         super.onRestart();
-        ReadClothesItemtFromFireBase();
+        ReadTshirtFromFireBase();
+        ReadBantsFromFireBase();
     }
 
-    private void ReadClothesItemtFromFireBase()
+    private void ReadTshirtFromFireBase()
     {
         //اشر لجزر قاعدة البيانات التابعه للمشروع يتخزن تحتها المهمات
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
@@ -80,18 +82,13 @@ public class CheckClothe extends AppCompatActivity
                             Tshirt m = d.getValue(Tshirt.class);//استخراج الكاىن المحفوظ
                             Bants b =d.getValue(Bants.class);
                             TshirtList.add(m);//اضافة الكائن للوسيط
-                            BantsList.add(b);
                         }
                         tshirtsAdapter = new TshirtsAdapter(TshirtList);
-                        bantsAdapter = new BantsAdapter(BantsList);
                         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
                         mLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
                         recyclerViewTshirt.setLayoutManager(mLayoutManager);
                         recyclerViewTshirt.setItemAnimator(new DefaultItemAnimator());
-                        recyclerViewTshirt.setAdapter(bantsAdapter);
-                        recyclerViewBants.setLayoutManager(mLayoutManager);
-                        recyclerViewBants.setItemAnimator(new DefaultItemAnimator());
-                        recyclerViewBants.setAdapter(bantsAdapter);
+                        recyclerViewTshirt.setAdapter(tshirtsAdapter);
                     }
 
                     @Override
@@ -100,4 +97,47 @@ public class CheckClothe extends AppCompatActivity
 
                 });
     }
+    private void ReadBantsFromFireBase()
+        {
+            //اشر لجزر قاعدة البيانات التابعه للمشروع يتخزن تحتها المهمات
+            DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+            //ليسينر لمراقبة اي تغيير يحدث تحت الجزر المحدد
+            //اي تغيير بقيمة صفه او حذف او اضافة كائن يتم اعلام اليسينير
+            //عندها يتم تنزيل كل المعطيات الموجوده تحت الجزر
+            String owner = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            FirebaseDatabase.getInstance().getReference().
+                    child("ClothesItem").child("Bants").
+                    child(owner).addValueEventListener(new ValueEventListener() {
+
+                        /**
+                         * دالة معالجة الحدث عند تغيير اي قيمه
+                         *
+                         * @param snapshot يحوي نسخه عن كل المعطيات تحت العنوان المراقب
+                         */
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            BantsList.clear();
+
+                            //يمحا كل اشي بداخله
+                            for (DataSnapshot d : snapshot.getChildren())//d يمر على جميع قيم مبنى المعطيات
+                            {
+                               //استخراج الكاىن المحفوظ
+                                Bants b =d.getValue(Bants.class);
+                                //اضافة الكائن للوسيط
+                                BantsList.add(b);
+                            }
+                            bantsAdapter = new BantsAdapter(BantsList);
+                            LinearLayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+                            mLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+                            recyclerViewBants.setLayoutManager(mLayoutManager);
+                            recyclerViewBants.setItemAnimator(new DefaultItemAnimator());
+                            recyclerViewBants.setAdapter(bantsAdapter);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                        }
+
+                    });
+        }
 }
