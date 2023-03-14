@@ -47,6 +47,19 @@
             android:layout_height="wrap_content" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <TextView
+        android:id="@+id/TvColor"
+        android:layout_marginTop="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Color :"
+        android:textSize="16sp" />
+
+    <Spinner
+        android:id="@+id/BColorSp"
+        android:layout_width="376dp"
+        android:layout_height="39dp" />
+
     <ImageButton
         android:layout_marginTop="16dp"
         android:id="@+id/IbBants"
@@ -75,12 +88,5 @@
         android:layout_height="wrap_content"
         android:backgroundTint="#635F5F"
         android:text="Cancel" />
-
-    <Button
-        android:id="@+id/BnNext"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="next"
-        android:text="Next" />
 
 </LinearLayout>

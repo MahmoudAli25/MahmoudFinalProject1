@@ -10,12 +10,13 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,10 +36,8 @@ import com.google.firebase.storage.UploadTask;
 import java.util.UUID;
 
 import mahmoud.mahmoudfinalproject.Data.Bants;
-import mahmoud.mahmoudfinalproject.Data.Tshirt;
 
-public class AddBants extends AppCompatActivity
-{
+public class AddBants extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private static final int PERMISSION_CODE = 101;
     private static final int IMAGE_PICK_CODE = 100;
 
@@ -58,6 +57,8 @@ public class AddBants extends AppCompatActivity
     private Button BAdd;
     private Button BaCancel;
 
+    private Spinner BColorSp;
+
 
 
 
@@ -68,6 +69,8 @@ public class AddBants extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_bants);
 
+        BColorSp=findViewById(R.id.BColorSp);
+
         TeEvent=findViewById(R.id.TeEvent);//الحدث
         TVevent=findViewById(R.id.TVevent);
         RbImportantB=findViewById(R.id.RbImportantB);
@@ -75,6 +78,11 @@ public class AddBants extends AppCompatActivity
         TeDate=findViewById(R.id.TeDate);//تاريخ
         BAdd=findViewById(R.id.BAdd);
         BaCancel=findViewById(R.id.BaCancel);
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.Colors, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        BColorSp.setAdapter(adapter);
+        BColorSp.setOnItemSelectedListener(this);
 
         //upload: 3
         IbBants=findViewById(R.id.IbBants);
@@ -113,13 +121,13 @@ public class AddBants extends AppCompatActivity
 
 
         //upload: 6
-        BnUploadB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                uploadImage(toUploadimageUri);
-            }
-        });
+//        BnUploadB.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v)
+//            {
+//                uploadImage(toUploadimageUri);
+//            }
+//        });
 
         BAdd.setOnClickListener(new View.OnClickListener()
         {
@@ -199,6 +207,7 @@ public class AddBants extends AppCompatActivity
         String event=TeEvent.getText().toString();
         String date=TeDate.getText().toString();
         int important=RbImportantB.getProgress();
+        String color=BColorSp.toString();
 //        if(text.length()==0)
 //        {
 //            etText.setError("Text can not be empty");
@@ -211,6 +220,7 @@ public class AddBants extends AppCompatActivity
             b.setDate(date);
             b.setEvent(event);
             b.setImportant(important);
+            b.setColor(color);
             //creatBants(b);
             if(uploadBants!=null || (uploadBants!=null && uploadBants.isInProgress()))
             {
@@ -291,5 +301,16 @@ public class AddBants extends AppCompatActivity
             toUploadimageUri = data.getData();
             IbBants.setImageURI(toUploadimageUri);
         }
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
+    {
+        String choice = adapterView.getItemAtPosition(i).toString();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
     }
 }

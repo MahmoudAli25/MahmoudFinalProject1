@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity
 
         ReadClothesItemtFromFireBase();
 
+
         IAItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)

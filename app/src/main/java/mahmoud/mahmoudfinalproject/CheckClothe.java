@@ -2,7 +2,11 @@ package mahmoud.mahmoudfinalproject;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -26,10 +30,14 @@ public class CheckClothe extends AppCompatActivity
 {
     private List<Tshirt> TshirtList = new ArrayList<>();
     private List<Bants> BantsList=new ArrayList<>();
+
     private TshirtsAdapter tshirtsAdapter;
     private BantsAdapter bantsAdapter;
+
     private RecyclerView recyclerViewTshirt;
     private RecyclerView recyclerViewBants;
+
+    private Button AddBnn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -40,16 +48,28 @@ public class CheckClothe extends AppCompatActivity
         recyclerViewTshirt = findViewById(R.id.recyclerViewTshirt);
         recyclerViewBants = findViewById(R.id.recyclerViewBants);
 
+        AddBnn = findViewById(R.id.AddBnn);
+
         ReadTshirtFromFireBase();
         ReadBantsFromFireBase();
 
         //prepareMovieData();
+
+        AddBnn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+                Intent i=new Intent(CheckClothe.this,MainActivity.class);
+                startActivity(i);
+            }
+        });
     }
 
-   
+
 
     @Override
-    protected void onRestart() {
+    protected void onRestart()
+    {
         super.onRestart();
         ReadTshirtFromFireBase();
         ReadBantsFromFireBase();
@@ -64,7 +84,8 @@ public class CheckClothe extends AppCompatActivity
         //عندها يتم تنزيل كل المعطيات الموجوده تحت الجزر
         String owner = FirebaseAuth.getInstance().getCurrentUser().getUid();
         FirebaseDatabase.getInstance().getReference().
-                child("ClothesItem").child("Tshirt").
+                child("ClothesItem").
+                child("Tshirt").
                 child(owner).addValueEventListener(new ValueEventListener() {
 
                     /**
@@ -80,7 +101,6 @@ public class CheckClothe extends AppCompatActivity
                         for (DataSnapshot d : snapshot.getChildren())//d يمر على جميع قيم مبنى المعطيات
                         {
                             Tshirt m = d.getValue(Tshirt.class);//استخراج الكاىن المحفوظ
-                            Bants b =d.getValue(Bants.class);
                             TshirtList.add(m);//اضافة الكائن للوسيط
                         }
                         tshirtsAdapter = new TshirtsAdapter(TshirtList);
@@ -93,10 +113,13 @@ public class CheckClothe extends AppCompatActivity
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
+                        error.getMessage();
                     }
 
                 });
     }
+
+
     private void ReadBantsFromFireBase()
         {
             //اشر لجزر قاعدة البيانات التابعه للمشروع يتخزن تحتها المهمات
@@ -106,7 +129,8 @@ public class CheckClothe extends AppCompatActivity
             //عندها يتم تنزيل كل المعطيات الموجوده تحت الجزر
             String owner = FirebaseAuth.getInstance().getCurrentUser().getUid();
             FirebaseDatabase.getInstance().getReference().
-                    child("ClothesItem").child("Bants").
+                    child("ClothesItem").
+                    child("Bants").
                     child(owner).addValueEventListener(new ValueEventListener() {
 
                         /**
@@ -140,4 +164,5 @@ public class CheckClothe extends AppCompatActivity
 
                     });
         }
+
 }

@@ -12,9 +12,12 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.RatingBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,7 +38,7 @@ import java.util.UUID;
 
 import mahmoud.mahmoudfinalproject.Data.Tshirt;
 
-public class AddTshirt extends AppCompatActivity {
+public class AddTshirt extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private static final int PERMISSION_CODE = 101;
     private static final int IMAGE_PICK_CODE = 100;
 
@@ -56,6 +59,9 @@ public class AddTshirt extends AppCompatActivity {
     StorageTask UploadTshirt;
     private Tshirt t= new Tshirt();
 
+    private Spinner ColorSpinner;
+
+
     public AddTshirt()
     {
     }
@@ -66,9 +72,9 @@ public class AddTshirt extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_tshirt);
 
+        ColorSpinner = findViewById(R.id.BColorSp);
         TeEvent = findViewById(R.id.TeEvent);
         TvDate = findViewById(R.id.TvDate);
-        BnNext=findViewById(R.id.BnNext);
 
         TeDate = findViewById(R.id.TeDate);
         RbImportant=findViewById(R.id.RbImportant);
@@ -76,6 +82,11 @@ public class AddTshirt extends AppCompatActivity {
         BnCancel = findViewById(R.id.BaCancel);
         //upload: 3
         IbTshirt = findViewById(R.id.IbBants);
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.Colors, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ColorSpinner.setAdapter(adapter);
+        ColorSpinner.setOnItemSelectedListener(this);
 
         SharedPreferences preferences = getSharedPreferences("mypref", MODE_PRIVATE);
         String key = preferences.getString("key", "");
@@ -199,6 +210,7 @@ public class AddTshirt extends AppCompatActivity {
         String event=TeEvent.getText().toString();
         String date=TeDate.getText().toString();
         int important=RbImportant.getProgress();
+        String color=ColorSpinner.toString();
 
 
         if(isok)
@@ -206,6 +218,7 @@ public class AddTshirt extends AppCompatActivity {
             t.setDate(date);
             t.setEvent(event);
             t.setImportant(important);
+            t.setColor(color);
             //creatTshirt(t);
            if(UploadTshirt!=null || (UploadTshirt!=null && UploadTshirt.isInProgress()))
            {
@@ -289,6 +302,16 @@ public class AddTshirt extends AppCompatActivity {
             toUploadimageUri = data.getData();
             IbTshirt.setImageURI(toUploadimageUri);
         }
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        String choice = adapterView.getItemAtPosition(i).toString();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
     }
 }
 
