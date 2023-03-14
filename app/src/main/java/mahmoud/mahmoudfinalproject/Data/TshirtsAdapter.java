@@ -19,12 +19,15 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+import mahmoud.mahmoudfinalproject.OnClickInterfaceTshirt;
 import mahmoud.mahmoudfinalproject.R;
 
 public class TshirtsAdapter extends RecyclerView.Adapter<TshirtsAdapter.MyViewHolder> {
 
     private List<Tshirt> TshirtList;
     ImageView imageView;
+    private OnClickInterfaceTshirt onClickInterfaceTshirt;
+
     class MyViewHolder extends RecyclerView.ViewHolder
     {
         MyViewHolder(View view) {
@@ -46,10 +49,21 @@ public class TshirtsAdapter extends RecyclerView.Adapter<TshirtsAdapter.MyViewHo
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position)
+    public void onBindViewHolder(MyViewHolder holder,  int position)
     {
         Tshirt tt = TshirtList.get(position);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickInterfaceTshirt.setClickTshirt(holder.getAdapterPosition());
+            }
+        });
+
         downloadImageToLocalFile(tt.getImage(),imageView);
+    }
+
+    public void setOnClickInterfaceTshirt(OnClickInterfaceTshirt onClickInterfaceTshirt) {
+        this.onClickInterfaceTshirt = onClickInterfaceTshirt;
     }
 
     @Override

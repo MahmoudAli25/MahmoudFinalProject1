@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -34,6 +35,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.Calendar;
 import java.util.UUID;
 
 import mahmoud.mahmoudfinalproject.Data.Tshirt;
@@ -43,27 +45,21 @@ public class AddTshirt extends AppCompatActivity implements AdapterView.OnItemSe
     private static final int IMAGE_PICK_CODE = 100;
 
 
-
     private TextInputEditText TeEvent;//عنوان
     private RatingBar RbImportant;
-    private TextView TvDate;
-    private TextInputEditText TeDate;//التاريخ
-    private ImageButton IbTshirt;//رفع صوره
+    private ImageView IbTshirt;//رفع صوره
     private Button BnAdd;
     private Button BnCancel;
-    private Button BnNext;
-    private Button BnUpload;
     private Uri filePath;
     private Uri toUploadimageUri;
     private Uri downladuri;
     StorageTask UploadTshirt;
-    private Tshirt t= new Tshirt();
+    private Tshirt t = new Tshirt();
 
     private Spinner ColorSpinner;
 
 
-    public AddTshirt()
-    {
+    public AddTshirt() {
     }
 
 
@@ -74,29 +70,37 @@ public class AddTshirt extends AppCompatActivity implements AdapterView.OnItemSe
 
         ColorSpinner = findViewById(R.id.BColorSp);
         TeEvent = findViewById(R.id.TeEvent);
-        TvDate = findViewById(R.id.TvDate);
 
-        TeDate = findViewById(R.id.TeDate);
-        RbImportant=findViewById(R.id.RbImportant);
+        RbImportant = findViewById(R.id.RbImportant);
         BnAdd = findViewById(R.id.BAdd);
         BnCancel = findViewById(R.id.BaCancel);
         //upload: 3
         IbTshirt = findViewById(R.id.IbBants);
 
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.Colors, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        ColorSpinner.setAdapter(adapter);
+
+        // Array of choices
+        String colors[] = {"Red", "Blue", "White", "Pink", "Black", "SkyBlue", "Grey"};
+
+//      Selection of the spinner
+//      Application of the Array to the Spinner
+        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, colors);
+        spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
+        ColorSpinner.setAdapter(spinnerArrayAdapter);
         ColorSpinner.setOnItemSelectedListener(this);
+
+
+//        // ArrayAdapter<String> adapter =new ArrayAdapter<String>(this,colors,android.R.layout.simple_spinner_item);
+//        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.Colors, android.R.layout.simple_spinner_item);
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        ColorSpinner.setAdapter(adapter);
+
 
         SharedPreferences preferences = getSharedPreferences("mypref", MODE_PRIVATE);
         String key = preferences.getString("key", "");
-        if (key.length() == 0)
-        {
-            Toast.makeText(this, "No key found", Toast.LENGTH_SHORT).show();
 
-        }
-        else
-        {
+        if (key.length() == 0) {
+            Toast.makeText(this, "No key found", Toast.LENGTH_SHORT).show();
+        } else {
             Toast.makeText(this, "key:" + key, Toast.LENGTH_SHORT).show();
         }
 
@@ -120,22 +124,16 @@ public class AddTshirt extends AppCompatActivity implements AdapterView.OnItemSe
                 }
             }
         });
-        BnNext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent b = new Intent(AddTshirt.this, CheckClothe.class);
-                startActivity(b);
-            }
-        });
-       //upload: 6
-       //Add
+
+        //upload: 6
+        //Add
         BnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 datapick();
             }
         });
+
         //Cancel
         BnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,91 +144,88 @@ public class AddTshirt extends AppCompatActivity implements AdapterView.OnItemSe
             }
         });
     }
-        //upload: 5
-        private void uploadImage(Uri filePath)
-        {
 
-            if(filePath != null)
-            {
-                final ProgressDialog progressDialog = new ProgressDialog(this);//بناء دايلوج من نوع اخر
-                progressDialog.setTitle("Uploading...");//عنوان الدايلوج
-                progressDialog.show();//اظهار الدايلوج
-                FirebaseStorage storage= FirebaseStorage.getInstance();
-                StorageReference storageReference = storage.getReference();
-                final StorageReference ref = storageReference.child("images/"+ UUID.randomUUID().toString());
-                UploadTshirt=ref.putFile(filePath)
-                        .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+    //upload: 5
+    private void uploadImage(Uri filePath) {
 
-                            @Override
-                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                progressDialog.dismiss();//رفض او الغاء الدايلوج
-                                ref.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Uri> task)
-                                    {
-                                        downladuri = task.getResult();
-                                        t.setImage(downladuri.toString());
-                                        checkAndSave(t);
+        if (filePath != null) {
+            final ProgressDialog progressDialog = new ProgressDialog(this);//بناء دايلوج من نوع اخر
+            progressDialog.setTitle("Uploading...");//عنوان الدايلوج
+            progressDialog.show();//اظهار الدايلوج
+            FirebaseStorage storage = FirebaseStorage.getInstance();
+            StorageReference storageReference = storage.getReference();
+            final StorageReference ref = storageReference.child("images/" + UUID.randomUUID().toString());
+            UploadTshirt = ref.putFile(filePath)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
 
-                                    }
-                                });
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            progressDialog.dismiss();//رفض او الغاء الدايلوج
+                            ref.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Uri> task) {
+                                    downladuri = task.getResult();
+                                    t.setImage(downladuri.toString());
+                                    checkAndSave(t);
 
-                                Toast.makeText(getApplicationContext(), "Uploaded", Toast.LENGTH_SHORT).show();
-                            }
+                                }
+                            });
 
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                progressDialog.dismiss();
-                                //اظهار دايلوج مكتوب فيه انه لم يعمل
-                                Toast.makeText(getApplicationContext(), "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        })
+                            Toast.makeText(getApplicationContext(), "Uploaded", Toast.LENGTH_SHORT).show();
+                        }
 
-                        .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                            @Override
-                            public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                                double progress = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot
-                                        .getTotalByteCount());
-                                //اظهار دايلوج انه يعمل
-                                progressDialog.setMessage("Uploaded "+(int)progress+"%");
-                            }
-                        });
-            }else
-            {
-                t.setImage("");
-                checkAndSave(t);
-            }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            progressDialog.dismiss();
+                            //اظهار دايلوج مكتوب فيه انه لم يعمل
+                            Toast.makeText(getApplicationContext(), "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    })
+
+                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                            double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot
+                                    .getTotalByteCount());
+                            //اظهار دايلوج انه يعمل
+                            progressDialog.setMessage("Uploaded " + (int) progress + "%");
+                        }
+                    });
+        } else {
+            t.setImage("");
+            checkAndSave(t);
+        }
+    }
+
+    private void datapick() {
+        boolean isok = true;
+        String event = TeEvent.getText().toString();
+        int important = RbImportant.getProgress();
+        String color = ColorSpinner.getSelectedItem().toString();
+
+        if (event.length() == 0) {
+            TeEvent.setError("event cant be empyt");
+            isok = false;
         }
 
-    private void datapick()
-    {
-        boolean isok=true;
-        String event=TeEvent.getText().toString();
-        String date=TeDate.getText().toString();
-        int important=RbImportant.getProgress();
-        String color=ColorSpinner.toString();
 
-
-        if(isok)
-        {
-            t.setDate(date);
+        if (isok) {
+            t.setTimes(Calendar.getInstance().getTimeInMillis());//current time
             t.setEvent(event);
             t.setImportant(important);
             t.setColor(color);
-            //creatTshirt(t);
-           if(UploadTshirt!=null || (UploadTshirt!=null && UploadTshirt.isInProgress()))
-           {
-            Toast.makeText(this, " UploadTshirt.isInProgress(", Toast.LENGTH_SHORT).show();
-           }
-           uploadImage(toUploadimageUri);
+
+            if (UploadTshirt != null || (UploadTshirt != null && UploadTshirt.isInProgress())) {
+                Toast.makeText(this, " UploadTshirt.isInProgress(", Toast.LENGTH_SHORT).show();
+            }
+            uploadImage(toUploadimageUri);
+        }
     }
-}
 
 
-    private void checkAndSave(Tshirt t)
-    {
+    private void checkAndSave(Tshirt t) {
 
         //استخراج الرقم المميز للمستخدم UID
         //                                          مستخدم مسبق
@@ -263,41 +258,35 @@ public class AddTshirt extends AppCompatActivity implements AdapterView.OnItemSe
     }
 
 
-    private void pickImageFromGallery(){
+    private void pickImageFromGallery() {
         //intent to pick image
-        Intent intent=new Intent(Intent.ACTION_PICK);
+        Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
-        startActivityForResult(intent,IMAGE_PICK_CODE);
+        startActivityForResult(intent, IMAGE_PICK_CODE);
     }
-
 
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode)
-        {
-            case PERMISSION_CODE:
-            {
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
-                {
+        switch (requestCode) {
+            case PERMISSION_CODE: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     //permission was granted
                     pickImageFromGallery();
-                }
-                else
-                {
+                } else {
                     //permission was denied
                     Toast.makeText(this, "Permission denied...!", Toast.LENGTH_SHORT).show();
                 }
             }
         }
     }
+
     //handle result of picked images
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data){
-        super.onActivityResult(requestCode,resultCode,data);
-        if (resultCode==RESULT_OK && requestCode== IMAGE_PICK_CODE)
-        {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == IMAGE_PICK_CODE) {
             //set image to image view
             toUploadimageUri = data.getData();
             IbTshirt.setImageURI(toUploadimageUri);
@@ -311,7 +300,6 @@ public class AddTshirt extends AppCompatActivity implements AdapterView.OnItemSe
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
-
     }
 }
 

@@ -1,4 +1,5 @@
 package mahmoud.mahmoudfinalproject;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -15,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -33,6 +35,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.Calendar;
 import java.util.UUID;
 
 import mahmoud.mahmoudfinalproject.Data.Bants;
@@ -43,11 +46,9 @@ public class AddBants extends AppCompatActivity implements AdapterView.OnItemSel
 
     private TextInputEditText TeEvent;//عنوان
     private TextView TVevent;
-    private TextView TvDate;
+    private TextView TvColor;
     private RatingBar RbImportantB;
-    private TextInputEditText TeDate;//التاريخ
-    private ImageButton IbBants;//رفع صوره
-    private Button BnUploadB;//رفع الصوره
+    private ImageView IbBants;//رفع صوره
     private Uri filePath;
     private Uri toUploadimageUri;
     private Uri downladuri;
@@ -60,32 +61,26 @@ public class AddBants extends AppCompatActivity implements AdapterView.OnItemSel
     private Spinner BColorSp;
 
 
-
-
-
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_bants);
 
-        BColorSp=findViewById(R.id.BColorSp);
+        BColorSp = findViewById(R.id.BColorSp);
+        TvColor = findViewById(R.id.TvColor);
+        TeEvent = findViewById(R.id.TeEvent);//الحدث
+        TVevent = findViewById(R.id.TVevent);
+        RbImportantB = findViewById(R.id.RbImportantB);
+        BAdd = findViewById(R.id.BAdd);
+        BaCancel = findViewById(R.id.BaCancel);
 
-        TeEvent=findViewById(R.id.TeEvent);//الحدث
-        TVevent=findViewById(R.id.TVevent);
-        RbImportantB=findViewById(R.id.RbImportantB);
-        TvDate=findViewById(R.id.TvDate);
-        TeDate=findViewById(R.id.TeDate);//تاريخ
-        BAdd=findViewById(R.id.BAdd);
-        BaCancel=findViewById(R.id.BaCancel);
-
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.Colors, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.Colors, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         BColorSp.setAdapter(adapter);
         BColorSp.setOnItemSelectedListener(this);
 
         //upload: 3
-        IbBants=findViewById(R.id.IbBants);
+        IbBants = findViewById(R.id.IbBants);
         SharedPreferences preferences = getSharedPreferences("mypref", MODE_PRIVATE);//*********************
         String key = preferences.getString("key", "");
         if (key.length() == 0) {
@@ -96,11 +91,9 @@ public class AddBants extends AppCompatActivity implements AdapterView.OnItemSel
         }
 
         //upload: 4
-        IbBants.setOnClickListener(new View.OnClickListener()
-        {
+        IbBants.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 //check runtime permission
                 Toast.makeText(getApplicationContext(), "image", Toast.LENGTH_SHORT).show();
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -129,8 +122,7 @@ public class AddBants extends AppCompatActivity implements AdapterView.OnItemSel
 //            }
 //        });
 
-        BAdd.setOnClickListener(new View.OnClickListener()
-        {
+        BAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bantsdatapick();
@@ -139,9 +131,8 @@ public class AddBants extends AppCompatActivity implements AdapterView.OnItemSel
         });
         BaCancel.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
-                Intent i =new Intent(AddBants.this,MainActivity.class);
+            public void onClick(View v) {
+                Intent i = new Intent(AddBants.this, MainActivity.class);
                 startActivity(i);
 
             }
@@ -149,18 +140,16 @@ public class AddBants extends AppCompatActivity implements AdapterView.OnItemSel
     }
 
     //upload: 5
-    private void uploadImage(Uri filePath)
-    {
+    private void uploadImage(Uri filePath) {
 
-        if(filePath != null)
-        {
+        if (filePath != null) {
             final ProgressDialog progressDialog = new ProgressDialog(this);//بناء دايلوج من نوع اخر
             progressDialog.setTitle("Uploading...");//هذا ما يحتويه الدايلوج
             progressDialog.show();//اظهار الدايلوج
-            FirebaseStorage storage= FirebaseStorage.getInstance();
+            FirebaseStorage storage = FirebaseStorage.getInstance();
             StorageReference storageReference = storage.getReference();
-            final StorageReference ref = storageReference.child("images/"+ UUID.randomUUID().toString());
-            uploadBants=ref.putFile(filePath)
+            final StorageReference ref = storageReference.child("images/" + UUID.randomUUID().toString());
+            uploadBants = ref.putFile(filePath)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
 
                         @Override
@@ -183,56 +172,49 @@ public class AddBants extends AppCompatActivity implements AdapterView.OnItemSel
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             progressDialog.dismiss();
-                            Toast.makeText(getApplicationContext(), "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     })
                     .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                            double progress = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot
+                            double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot
                                     .getTotalByteCount());
-                            progressDialog.setMessage("Uploaded "+(int)progress+"%");//يعرض بالدايلوج
+                            progressDialog.setMessage("Uploaded " + (int) progress + "%");//يعرض بالدايلوج
                         }
                     });
-        }else
-        {
+        } else {
             b.setImage("");
             checkAndSave(b);
         }
     }
 
-    private void Bantsdatapick()
-    {
-        boolean isok=true;
-        String event=TeEvent.getText().toString();
-        String date=TeDate.getText().toString();
-        int important=RbImportantB.getProgress();
-        String color=BColorSp.toString();
-//        if(text.length()==0)
-//        {
-//            etText.setError("Text can not be empty");
-//            isok=false;
-//
-//       }
-        if(isok)
-        {
-            b=new Bants();
-            b.setDate(date);
+    private void Bantsdatapick() {
+        boolean isok = true;
+        String event = TeEvent.getText().toString();
+        int important = RbImportantB.getProgress();
+        String color = BColorSp.toString();
+
+        if (event.length() == 0) {
+            TeEvent.setError("event can not be empty");
+            isok = false;
+        }
+
+        if (isok) {
+            b = new Bants();
+            b.setTimes(Calendar.getInstance().getTimeInMillis());//current time
             b.setEvent(event);
             b.setImportant(important);
             b.setColor(color);
             //creatBants(b);
-            if(uploadBants!=null || (uploadBants!=null && uploadBants.isInProgress()))
-            {
+            if (uploadBants != null || (uploadBants != null && uploadBants.isInProgress())) {
                 Toast.makeText(this, " UploadBants.isInProgress(", Toast.LENGTH_SHORT).show();
-            }
-            else
+            } else
                 uploadImage(toUploadimageUri);
         }
     }
 
-    private void checkAndSave(Bants b)
-    {
+    private void checkAndSave(Bants b) {
         //استخراج الرقم المميز للمستخدم UID
         //                                          مستخدم مسبق
         String owner = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -250,32 +232,28 @@ public class AddBants extends AppCompatActivity implements AdapterView.OnItemSel
                 child("Bants").
                 child(owner).
                 child(key).
-                setValue(b).addOnCompleteListener(new OnCompleteListener<Void>()
-                {
+                setValue(b).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
-                    public void onComplete(@NonNull Task<Void> task)
-                    {
-                        if (task.isSuccessful())
-                        {
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
                             finish();
                             Toast.makeText(AddBants.this, "Added Succesfully", Toast.LENGTH_SHORT).show();
-                        }
-                        else
-                        {
+                        } else {
                             Toast.makeText(AddBants.this, "Add Failled", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
 
 
+    }
 
-    }
-    private void pickImageFromGallery(){
+    private void pickImageFromGallery() {
         //intent to pick image
-        Intent intent=new Intent(Intent.ACTION_PICK);
+        Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
-        startActivityForResult(intent,IMAGE_PICK_CODE);
+        startActivityForResult(intent, IMAGE_PICK_CODE);
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -291,12 +269,12 @@ public class AddBants extends AppCompatActivity implements AdapterView.OnItemSel
             }
         }
     }
+
     //handle result of picked images
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data){
-        super.onActivityResult(requestCode,resultCode,data);
-        if (resultCode==RESULT_OK && requestCode== IMAGE_PICK_CODE)
-        {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == IMAGE_PICK_CODE) {
             //set image to image view
             toUploadimageUri = data.getData();
             IbBants.setImageURI(toUploadimageUri);
@@ -304,8 +282,7 @@ public class AddBants extends AppCompatActivity implements AdapterView.OnItemSel
     }
 
     @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
-    {
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         String choice = adapterView.getItemAtPosition(i).toString();
     }
 

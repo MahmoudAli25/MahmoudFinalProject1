@@ -13,7 +13,7 @@ public class Bants
      */
     private String Key;
     private String Event;
-    private String Date;
+    long times;
     private String Color;
     private String Owner;
     private  int Important;
@@ -41,9 +41,8 @@ public class Bants
         return Event;
     }
 
-    public String getDate()
-    {
-        return Date;
+    public long getTimes() {
+        return times;
     }
 
     public String getColor()
@@ -73,11 +72,9 @@ public class Bants
         Event = event;
     }
 
-    public void setDate(String date)
-    {
-        Date = date;
+    public void setTimes(long times) {
+        this.times = times;
     }
-
 
     public void setColor(String color)
     {
@@ -94,7 +91,7 @@ public class Bants
         return "Bants{" +
                 "Key='" + Key + '\'' +
                 ", Event='" + Event + '\'' +
-                ", Date='" + Date + '\'' +
+                ", Date='" + times + '\'' +
                 ", Color='" + Color + '\'' +
                 ", Owner='" + Owner + '\'' +
                 ", Important='" + Important + '\'' +

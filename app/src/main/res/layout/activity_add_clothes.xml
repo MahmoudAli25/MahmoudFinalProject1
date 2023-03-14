@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:gravity="center"
-    android:paddingHorizontal="16dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
     android:orientation="vertical"
-    android:layout_gravity="center"
+    android:paddingHorizontal="16dp"
     tools:context=".AddClothes">
+
+    <ImageButton
+        android:id="@+id/BRet"
+        android:layout_width="64dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        app:srcCompat="?attr/actionModeCloseDrawable" />
 
     <ImageButton
         android:id="@+id/IbShirt"
@@ -27,12 +33,5 @@
         android:layout_margin="50dp"
         android:layout_weight="1"
         app:srcCompat="@mipmap/ic_launcher_jeanss_foreground" />
-
-    <Button
-        android:id="@+id/BCancel"
-        android:layout_width="265dp"
-        android:layout_height="9dp"
-        android:layout_weight="1"
-        android:text="cancel" />
 
 </LinearLayout>

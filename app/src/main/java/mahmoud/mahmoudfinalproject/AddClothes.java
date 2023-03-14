@@ -12,7 +12,7 @@ public class AddClothes extends AppCompatActivity
 {
     private ImageButton IbShirt;
     private ImageButton IbJeans;
-    private Button BCancel;
+    private ImageButton BRet;
 
 
     @Override
@@ -21,9 +21,9 @@ public class AddClothes extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_clothes);
 
+        BRet=findViewById(R.id.BRet);
         IbShirt=findViewById(R.id.IbShirt);
         IbJeans=findViewById(R.id.IbJeans);
-        BCancel=findViewById(R.id.BCancel);
 
 
         IbShirt.setOnClickListener(new View.OnClickListener() {
@@ -44,7 +44,7 @@ public class AddClothes extends AppCompatActivity
             }
         });
 
-        BCancel.setOnClickListener(new View.OnClickListener() {
+        BRet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {

@@ -19,6 +19,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+import mahmoud.mahmoudfinalproject.OnClickInterfaceBants;
 import mahmoud.mahmoudfinalproject.R;
 
 public class BantsAdapter extends RecyclerView.Adapter<BantsAdapter.MyViewHolder>
@@ -26,6 +27,9 @@ public class BantsAdapter extends RecyclerView.Adapter<BantsAdapter.MyViewHolder
 
     private List<Bants> BantsList;
     ImageView imageView;
+
+    private OnClickInterfaceBants onClickInterfaceBants;
+
     class MyViewHolder extends RecyclerView.ViewHolder
     {
         MyViewHolder(View view) {
@@ -51,8 +55,21 @@ public class BantsAdapter extends RecyclerView.Adapter<BantsAdapter.MyViewHolder
     public void onBindViewHolder(BantsAdapter.MyViewHolder holder, int position)
     {
         Bants bb = BantsList.get(position);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickInterfaceBants.setClickBants(holder.getAdapterPosition());
+            }
+        });
+
         downloadImageToLocalFile(bb.getImage(),imageView);
     }
+
+    public void setOnClickInterfaceBants(OnClickInterfaceBants onClickInterfaceBants) {
+        this.onClickInterfaceBants = onClickInterfaceBants;
+    }
+
+
 
     @Override
     public int getItemCount()
