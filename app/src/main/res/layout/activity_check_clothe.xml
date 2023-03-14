@@ -25,5 +25,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:text="Add" />
+        android:backgroundTint="#635F5F"
+        android:text=" Add Clothes" />
 </LinearLayout>

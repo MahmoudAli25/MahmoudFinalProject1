@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -34,6 +35,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.Calendar;
 import java.util.UUID;
 
 import mahmoud.mahmoudfinalproject.Data.Tshirt;
@@ -46,13 +48,9 @@ public class AddTshirt extends AppCompatActivity implements AdapterView.OnItemSe
 
     private TextInputEditText TeEvent;//عنوان
     private RatingBar RbImportant;
-    private TextView TvDate;
-    private TextInputEditText TeDate;//التاريخ
-    private ImageButton IbTshirt;//رفع صوره
+    private ImageView IbTshirt;//رفع صوره
     private Button BnAdd;
     private Button BnCancel;
-    private Button BnNext;
-    private Button BnUpload;
     private Uri filePath;
     private Uri toUploadimageUri;
     private Uri downladuri;
@@ -74,9 +72,7 @@ public class AddTshirt extends AppCompatActivity implements AdapterView.OnItemSe
 
         ColorSpinner = findViewById(R.id.BColorSp);
         TeEvent = findViewById(R.id.TeEvent);
-        TvDate = findViewById(R.id.TvDate);
 
-        TeDate = findViewById(R.id.TeDate);
         RbImportant=findViewById(R.id.RbImportant);
         BnAdd = findViewById(R.id.BAdd);
         BnCancel = findViewById(R.id.BaCancel);
@@ -120,13 +116,7 @@ public class AddTshirt extends AppCompatActivity implements AdapterView.OnItemSe
                 }
             }
         });
-        BnNext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent b = new Intent(AddTshirt.this, CheckClothe.class);
-                startActivity(b);
-            }
-        });
+
        //upload: 6
        //Add
         BnAdd.setOnClickListener(new View.OnClickListener() {
@@ -208,22 +198,28 @@ public class AddTshirt extends AppCompatActivity implements AdapterView.OnItemSe
     {
         boolean isok=true;
         String event=TeEvent.getText().toString();
-        String date=TeDate.getText().toString();
         int important=RbImportant.getProgress();
-        String color=ColorSpinner.toString();
+        String color=ColorSpinner.getSelectedItem().toString();
+
+        if(event.length()==0)
+        {
+            TeEvent.setError("event cant be empyt");
+            isok=false;
+        }
+
 
 
         if(isok)
         {
-            t.setDate(date);
+            t.setTimes(Calendar.getInstance().getTimeInMillis());//current time
             t.setEvent(event);
             t.setImportant(important);
             t.setColor(color);
-            //creatTshirt(t);
-           if(UploadTshirt!=null || (UploadTshirt!=null && UploadTshirt.isInProgress()))
-           {
+
+            if(UploadTshirt!=null || (UploadTshirt!=null && UploadTshirt.isInProgress()))
+            {
             Toast.makeText(this, " UploadTshirt.isInProgress(", Toast.LENGTH_SHORT).show();
-           }
+            }
            uploadImage(toUploadimageUri);
     }
 }

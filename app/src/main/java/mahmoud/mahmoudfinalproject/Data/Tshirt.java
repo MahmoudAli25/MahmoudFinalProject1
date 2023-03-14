@@ -12,7 +12,7 @@ public class Tshirt
      */
     private String Key;
     private String Event;
-    private String Date;
+    long times;
     private String Color;
     private String Owner;
     private  int Important;
@@ -39,9 +39,8 @@ public class Tshirt
         return Event;
     }
 
-    public String getDate()
-    {
-        return Date;
+    public long getTimes() {
+        return times;
     }
 
     public String getColor()
@@ -71,11 +70,9 @@ public class Tshirt
         Event = event;
     }
 
-    public void setDate(String date)
-    {
-        Date = date;
+    public void setTimes(long times) {
+        this.times = times;
     }
-
 
     public void setColor(String color)
     {
@@ -92,7 +89,7 @@ public class Tshirt
         return "Tshirt{" +
                 "Key='" + Key + '\'' +
                 ", Event='" + Event + '\'' +
-                ", Date='" + Date + '\'' +
+                ", Date='" + times + '\'' +
                 ", Color='" + Color + '\'' +
                 ", Owner='" + Owner + '\'' +
                 ", Important='" + Important + '\'' +
