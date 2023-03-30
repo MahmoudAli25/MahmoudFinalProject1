@@ -105,6 +105,10 @@ public class BantsAdapter extends RecyclerView.Adapter<BantsAdapter.MyViewHolder
             e.printStackTrace();
         }
     }
+
+    public List<Bants> getBantsList() {
+        return BantsList;
+    }
 }
 
 

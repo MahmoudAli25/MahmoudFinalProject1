@@ -98,6 +98,10 @@ public class TshirtsAdapter extends RecyclerView.Adapter<TshirtsAdapter.MyViewHo
             e.printStackTrace();
         }
     }
+
+    public List<Tshirt> getTshirtList() {
+        return TshirtList;
+    }
 }
 
 

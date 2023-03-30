@@ -27,6 +27,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import mahmoud.mahmoudfinalproject.Data.Bants;
 import mahmoud.mahmoudfinalproject.Data.BantsAdapter;
+import mahmoud.mahmoudfinalproject.Data.CloTheSet;
 import mahmoud.mahmoudfinalproject.Data.TshirtsAdapter;
 import mahmoud.mahmoudfinalproject.Data.Tshirt;
 
@@ -229,35 +230,32 @@ public class CheckClothe extends AppCompatActivity implements OnClickInterfaceTs
     {
         Boolean IsOk = true;
 
+        //Tshirt
         if (selectedTshirt ==-1)
         {
+            Toast.makeText(CheckClothe.this, "Select Tshirt", Toast.LENGTH_SHORT).show();
             IsOk = false;
         }
 
-        if(IsOk == false)
-        {
-            Toast.makeText(CheckClothe.this, "Select Tshirt", Toast.LENGTH_SHORT).show();
-        }
-        else
-        {
-            Toast.makeText(CheckClothe.this, "Good Choice", Toast.LENGTH_SHORT).show();
-        }
-
+        //Bants
         if (selectedBants == -1)
         {
+            Toast.makeText(CheckClothe.this, "Select Bants", Toast.LENGTH_SHORT).show();
             IsOk = false;
         }
 
-        if (IsOk == false)
+        if (IsOk )
         {
-            Toast.makeText(CheckClothe.this, "Select Bants", Toast.LENGTH_SHORT).show();
-        }
-        else
-        {
-            Toast.makeText(CheckClothe.this, "Nice Choice", Toast.LENGTH_SHORT).show();
+            Tshirt tshirt = tshirtsAdapter.getTshirtList().get(selectedTshirt);
+            Bants bants = bantsAdapter.getBantsList().get(selectedBants);
+            CloTheSet c = new CloTheSet();
+
+            c.setT(tshirt);
+            c.setB(bants);
         }
 
-        //استخراج الرقم المميز للمستخدم UID
+
+/**        //استخراج الرقم المميز للمستخدم UID
         //                                          مستخدم مسبق
         String owner = FirebaseAuth.getInstance().getCurrentUser().getUid();
         t.setOwner(owner);
@@ -290,6 +288,7 @@ public class CheckClothe extends AppCompatActivity implements OnClickInterfaceTs
                         }
                     }
                 });
+ */
     }
 
 
