@@ -29,6 +29,13 @@
         android:text=" Add Clothes" />
 
     <Button
+        android:id="@+id/BtnSave"
+        android:layout_width="121dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#635F5F"
+        android:text="Save " />
+
+    <Button
         android:id="@+id/BnCheck"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

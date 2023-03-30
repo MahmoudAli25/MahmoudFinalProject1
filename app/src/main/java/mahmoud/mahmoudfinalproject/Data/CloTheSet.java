@@ -1,6 +1,7 @@
 package mahmoud.mahmoudfinalproject.Data;
 
-public class CloTheSet {
+public class CloTheSet
+{
     private Tshirt t;
     private Bants b;
 
@@ -19,4 +20,5 @@ public class CloTheSet {
     public void setB(Bants b) {
         this.b = b;
     }
+
 }

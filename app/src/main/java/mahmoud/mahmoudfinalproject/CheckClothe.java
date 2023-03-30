@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,6 +16,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -35,12 +38,13 @@ public class CheckClothe extends AppCompatActivity implements OnClickInterfaceTs
     private TshirtsAdapter tshirtsAdapter;
     private BantsAdapter bantsAdapter;
 
-    private int selectedTshirt,selectedBants;
+    private int selectedTshirt=-1,selectedBants=-1;
     private RecyclerView recyclerViewTshirt;
     private RecyclerView recyclerViewBants;
 
     private Button AddBnn;
     private Button BnCheck;
+    private Button BtnSave;
 
     private Tshirt T;
     private Bants B;
@@ -59,9 +63,19 @@ public class CheckClothe extends AppCompatActivity implements OnClickInterfaceTs
 
         AddBnn = findViewById(R.id.AddBnn);
         BnCheck = findViewById(R.id.BnCheck);
+        BtnSave = findViewById(R.id.BtnSave);
 
         ReadTshirtFromFireBase();
         ReadBantsFromFireBase();
+
+        BtnSave.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                checkAndSave();
+            }
+        });
 
         BnCheck.setOnClickListener(new View.OnClickListener()
         {
@@ -75,7 +89,8 @@ public class CheckClothe extends AppCompatActivity implements OnClickInterfaceTs
         AddBnn.setOnClickListener(new View.OnClickListener()
         {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view)
+            {
                 Intent i = new Intent(CheckClothe.this, MainActivity.class);
                 startActivity(i);
             }
@@ -121,6 +136,7 @@ public class CheckClothe extends AppCompatActivity implements OnClickInterfaceTs
                             TshirtList.add(m);//اضافة الكائن للوسيط
                         }
                         tshirtsAdapter = new TshirtsAdapter(TshirtList);
+                        tshirtsAdapter.setOnClickInterfaceTshirt(CheckClothe.this);
                         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
                         mLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
                         recyclerViewTshirt.setLayoutManager(mLayoutManager);
@@ -168,6 +184,7 @@ public class CheckClothe extends AppCompatActivity implements OnClickInterfaceTs
                             BantsList.add(b);
                         }
                         bantsAdapter = new BantsAdapter(BantsList);
+                        bantsAdapter.setOnClickInterfaceBants(CheckClothe.this);
                         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
                         mLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
                         recyclerViewBants.setLayoutManager(mLayoutManager);
@@ -207,6 +224,75 @@ public class CheckClothe extends AppCompatActivity implements OnClickInterfaceTs
         }
         return false;
     }
+
+    private void checkAndSave()
+    {
+        Boolean IsOk = true;
+
+        if (selectedTshirt ==-1)
+        {
+            IsOk = false;
+        }
+
+        if(IsOk == false)
+        {
+            Toast.makeText(CheckClothe.this, "Select Tshirt", Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
+            Toast.makeText(CheckClothe.this, "Good Choice", Toast.LENGTH_SHORT).show();
+        }
+
+        if (selectedBants == -1)
+        {
+            IsOk = false;
+        }
+
+        if (IsOk == false)
+        {
+            Toast.makeText(CheckClothe.this, "Select Bants", Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
+            Toast.makeText(CheckClothe.this, "Nice Choice", Toast.LENGTH_SHORT).show();
+        }
+
+        //استخراج الرقم المميز للمستخدم UID
+        //                                          مستخدم مسبق
+        String owner = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        t.setOwner(owner);
+        //استخراج الرقم المميز للمهمه
+        String key = FirebaseDatabase.getInstance().getReference().
+                child("ClothesItem").
+                child("Tshirt").
+                //اضافة قيمه جديده
+                        child(owner).push().getKey();
+        t.setKey(key);
+        //عنوان جذر قاعدة البيانات
+        FirebaseDatabase.getInstance().getReference().
+                child("ClothesItem").
+                child("Tshirt").
+                child(owner).
+                child(key).
+                setValue(t).addOnCompleteListener(new OnCompleteListener<Void>()
+                {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task)
+                    {
+                        if (task.isSuccessful())
+                        {
+                            finish();
+                            Toast.makeText(CheckClothe.this, "Saved Succesfully", Toast.LENGTH_SHORT).show();
+                        }
+                        else
+                        {
+                            Toast.makeText(CheckClothe.this, "Saved Failled", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
+
+
 
     @Override
     public void setClickTshirt(int abc)
