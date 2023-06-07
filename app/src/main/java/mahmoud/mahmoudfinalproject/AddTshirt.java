@@ -131,6 +131,7 @@ public class AddTshirt extends AppCompatActivity implements AdapterView.OnItemSe
             @Override
             public void onClick(View v) {
                 datapick();
+                Intent i = new Intent(AddTshirt.this, CheckClothe.class);
             }
         });
 

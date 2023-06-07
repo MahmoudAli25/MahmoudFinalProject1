@@ -31,6 +31,7 @@ import mahmoud.mahmoudfinalproject.Data.Tshirt;
 public class MainActivity extends AppCompatActivity
 {
     SearchView SItem;//للبحث عن احد المهام
+    ImageButton Ibackbtn;
     ImageButton IAItem;//لاضافة مهمه جديده الى القائمه
     ListView ListItem;//قائمة عرض المهم
     //3.1 تجهيز الوسيط
@@ -48,6 +49,7 @@ public class MainActivity extends AppCompatActivity
 
 
         SItem = findViewById(R.id.SItem);
+        Ibackbtn = findViewById(R.id.Ibackbtn);
         IAItem = findViewById(R.id.IAItem);
         //تجهيز مؤشر لقائمة العرض
         ListItem = findViewById(R.id.ListItem);
@@ -58,6 +60,17 @@ public class MainActivity extends AppCompatActivity
         //ويقوم بتنظيف المعطيات الموجوده وتنزيل المعلومات الجديده
 
         ReadClothesItemtFromFireBase();
+
+
+        Ibackbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                Intent i=new Intent(MainActivity.this,CheckClothe.class);
+                startActivity(i);
+
+            }
+        });
 
 
         IAItem.setOnClickListener(new View.OnClickListener() {

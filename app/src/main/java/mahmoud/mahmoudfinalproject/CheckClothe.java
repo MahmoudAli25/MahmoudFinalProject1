@@ -1,10 +1,14 @@
 package mahmoud.mahmoudfinalproject;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -15,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -40,12 +45,14 @@ public class CheckClothe extends AppCompatActivity implements OnClickInterfaceTs
     private BantsAdapter bantsAdapter;
 
     private int selectedTshirt=-1,selectedBants=-1;
-    private RecyclerView recyclerViewTshirt;
-    private RecyclerView recyclerViewBants;
+    private RecyclerView recyclerViewTshirt;//قائمة البلائز
+    private RecyclerView recyclerViewBants;//قائمة البناطلين
 
-    private Button AddBnn;
-    private Button BnCheck;
-    private Button BtnSave;
+    private Button AddBnn;//لاضافه
+    private Button BnCheck;//فحص الاختيار
+    private Button BtnSave;//حفظ الاختيار
+
+    private String D;
 
     private Tshirt T;
     private Bants B;
@@ -69,7 +76,7 @@ public class CheckClothe extends AppCompatActivity implements OnClickInterfaceTs
         ReadTshirtFromFireBase();
         ReadBantsFromFireBase();
 
-        BtnSave.setOnClickListener(new View.OnClickListener()
+        BtnSave.setOnClickListener(new View.OnClickListener()//زر الحفظ
         {
             @Override
             public void onClick(View view)
@@ -78,16 +85,44 @@ public class CheckClothe extends AppCompatActivity implements OnClickInterfaceTs
             }
         });
 
-        BnCheck.setOnClickListener(new View.OnClickListener()
+        BnCheck.setOnClickListener(new View.OnClickListener()//زر الفحص
         {
+            AlertDialog.Builder builder=new AlertDialog.Builder(CheckClothe.this);
             @Override
             public void onClick(View view)
             {
-
+                if(IsColor())
+                {
+                // تجهيز البناء للدايلوج
+                builder.setTitle("Check Clothes");
+                builder.setMessage("Very Good Choice");
+                builder.setPositiveButton("Done", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        //اخفاء الديالوج
+                        dialogInterface.dismiss();
+                    }
+                });
+                builder.create().show();
+            }
+            else
+            {
+                // تجهيز البناء للدايلوج
+                builder.setTitle("Check Clothes");
+                builder.setMessage("Not a Good Choice");
+                builder.setPositiveButton("Done", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        //اخفاء الديالوج
+                        dialogInterface.dismiss();
+                    }
+                });
+                builder.create().show();
+            }
             }
         });
 
-        AddBnn.setOnClickListener(new View.OnClickListener()
+        AddBnn.setOnClickListener(new View.OnClickListener()//زر الاظافه
         {
             @Override
             public void onClick(View view)
@@ -98,6 +133,59 @@ public class CheckClothe extends AppCompatActivity implements OnClickInterfaceTs
         });
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(@NonNull Menu menu) {
+        getMenuInflater().inflate(R.menu.menu,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item)
+    {
+        if (item.getItemId()==R.id.ITMset)//يفحص هل عند الضغط عزر تطابق الارقام
+        {
+            Intent i=new Intent(CheckClothe.this,Settings.class);
+            startActivity(i);
+        }
+        AlertDialog.Builder builder=new AlertDialog.Builder(CheckClothe.this);
+        if (item.getItemId()==R.id.ITMout)
+        {
+            //تسجيل الخروج
+            //1
+            // تجهيز البناء للدايلوج
+            builder.setTitle("Signing Out");
+            builder.setMessage("are you sure?");
+            builder.setPositiveButton("yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i)
+                {
+                    //اخفاء الديالوج
+                    dialogInterface.dismiss();
+                    //الخروج من الحساب
+                    FirebaseAuth.getInstance().signOut();
+                    //لخروج من الشاشه
+                    finish();
+                }
+            });
+            builder.setNegativeButton("no", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i)
+                {
+                    //الغاء الدايالوج
+                    dialogInterface.cancel();
+                }
+            });
+            //البناء
+            AlertDialog dialog=builder.create();
+            dialog.show();//عرض الدايلوج
+        }
+
+        if (item.getItemId()==R.id.ITMhist)
+        {
+            Intent d=new Intent(CheckClothe.this,History.class);
+        }
+        return true;
+    }
 
     @Override
     protected void onRestart()
@@ -201,27 +289,30 @@ public class CheckClothe extends AppCompatActivity implements OnClickInterfaceTs
     }
 
 
-    public static boolean IsColor(Tshirt T, Bants B)
-    {
-        if((T.getColor()=="Black") && (B.getColor() == "White" || B.getColor() == "Black" || B.getColor() == "Grey"))
+    public  boolean IsColor() {
+        if (selectedTshirt != -1 && selectedBants != -1)
         {
-            return true;
-        }
-        else
-        {
-            if ((T.getColor()=="White" || T.getColor()=="Pink"|| T.getColor()=="SkyBlue" || T.getColor()=="Blue") && (B.getColor() == "Black" || B.getColor() == "Blue" ||B.getColor() == "Grey" ||B.getColor() == "SkyBlue"))
-            {
+            Tshirt T = TshirtList.get(selectedTshirt);
+            Bants B =  BantsList.get(selectedBants);
+
+            if ((T.getColor() == "Black") && (B.getColor() == "White" || B.getColor() == "Black" || B.getColor() == "Grey")) {
                 return true;
-            }
-            else
-            {
-                if ((T.getColor() == "Red" || T.getColor() == "Pink") && (B.getColor() == "Red" || B.getColor() == "Pink"))
-                {
+            } else {
+                if ((T.getColor() == "White" || T.getColor() == "Pink" || T.getColor() == "SkyBlue" || T.getColor() == "Blue") && (B.getColor() == "Black" || B.getColor() == "Blue" || B.getColor() == "Grey" || B.getColor() == "SkyBlue")) {
                     return true;
+                } else {
+                    if ((T.getColor() == "Red" || T.getColor() == "Pink") && (B.getColor() == "Red" || B.getColor() == "Pink")) {
+                        return true;
+                    }
+
                 }
 
             }
-
+        }
+        else
+        {
+            //No CLothes Selected
+            Toast.makeText(this, "Select Tshirt And Bants..!", Toast.LENGTH_SHORT).show();
         }
         return false;
     }

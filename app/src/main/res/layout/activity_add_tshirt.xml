@@ -21,10 +21,12 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/TeEvent"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -39,7 +41,8 @@
     <Spinner
         android:id="@+id/BColorSp"
         android:layout_width="376dp"
-        android:layout_height="39dp" />
+        android:layout_height="48dp"
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <ImageView
         android:layout_marginTop="16dp"
@@ -53,7 +56,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:max="5"
-        android:numStars="5" />
+        android:numStars="5"
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <Button
         android:layout_marginTop="60dp"
