@@ -30,6 +30,7 @@ public class BantsAdapter extends RecyclerView.Adapter<BantsAdapter.MyViewHolder
 
     private OnClickInterfaceBants onClickInterfaceBants;
 
+    //  من خلاله يمكن الوصول الى العناصر وتحديثها
     class MyViewHolder extends RecyclerView.ViewHolder
     {
         MyViewHolder(View view) {

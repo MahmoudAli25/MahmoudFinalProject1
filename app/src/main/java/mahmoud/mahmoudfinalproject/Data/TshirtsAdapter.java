@@ -26,8 +26,10 @@ public class TshirtsAdapter extends RecyclerView.Adapter<TshirtsAdapter.MyViewHo
 
     private List<Tshirt> TshirtList;
     ImageView imageView;
+    //عن طريقه يمكن التواصل بين مكونات الشاشه والمنطق الخلفي لتنفيذ اجراء معين
     private OnClickInterfaceTshirt onClickInterfaceTshirt;
 
+    //  من خلاله يمكن الوصول الى العناصر وتحديثها
     class MyViewHolder extends RecyclerView.ViewHolder
     {
         MyViewHolder(View view) {
@@ -67,6 +69,7 @@ public class TshirtsAdapter extends RecyclerView.Adapter<TshirtsAdapter.MyViewHo
     }
 
     @Override
+    //تستخدم لتحديد عدد العناص في RecycleView وتساعد في ادارته
     public int getItemCount() {
         return TshirtList.size();
     }
@@ -95,6 +98,7 @@ public class TshirtsAdapter extends RecyclerView.Adapter<TshirtsAdapter.MyViewHo
             });
         } catch (IOException e)
         {
+            //تستخدم لتصحيح و تحليل الاخطاء
             e.printStackTrace();
         }
     }

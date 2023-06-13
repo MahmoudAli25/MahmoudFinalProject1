@@ -71,54 +71,48 @@ public class CheckClothe extends AppCompatActivity implements OnClickInterfaceTs
 
         AddBnn = findViewById(R.id.AddBnn);
         BnCheck = findViewById(R.id.BnCheck);
-        BtnSave = findViewById(R.id.BtnSave);
 
         ReadTshirtFromFireBase();
         ReadBantsFromFireBase();
-
-        BtnSave.setOnClickListener(new View.OnClickListener()//زر الحفظ
-        {
-            @Override
-            public void onClick(View view)
-            {
-                checkAndSave();
-            }
-        });
 
         BnCheck.setOnClickListener(new View.OnClickListener()//زر الفحص
         {
             AlertDialog.Builder builder=new AlertDialog.Builder(CheckClothe.this);
             @Override
-            public void onClick(View view)
-            {
-                if(IsColor())
+            public void onClick(View view) {
+
+                if (isTake())
                 {
-                // تجهيز البناء للدايلوج
-                builder.setTitle("Check Clothes");
-                builder.setMessage("Very Good Choice");
-                builder.setPositiveButton("Done", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        //اخفاء الديالوج
-                        dialogInterface.dismiss();
+                    if (IsColor())
+                    {
+                        // تجهيز البناء للدايلوج
+                        builder.setTitle("Check Clothes");
+                        builder.setMessage("Very Good Choice");
+                        builder.setPositiveButton("Done", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                //اخفاء الديالوج
+                                dialogInterface.dismiss();
+                            }
+                        });
+                        builder.create().show();
                     }
-                });
-                builder.create().show();
-            }
-            else
-            {
-                // تجهيز البناء للدايلوج
-                builder.setTitle("Check Clothes");
-                builder.setMessage("Not a Good Choice");
-                builder.setPositiveButton("Done", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        //اخفاء الديالوج
-                        dialogInterface.dismiss();
+                    else
+                    {
+                        // تجهيز البناء للدايلوج
+                        builder.setTitle("Check Clothes");
+                        builder.setMessage("Not a Good Choice");
+                        builder.setPositiveButton("Done", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                //اخفاء الديالوج
+                                dialogInterface.dismiss();
+                            }
+                        });
+                        builder.create().show();
                     }
-                });
-                builder.create().show();
-            }
+                }
+
             }
         });
 
@@ -290,8 +284,7 @@ public class CheckClothe extends AppCompatActivity implements OnClickInterfaceTs
 
 
     public  boolean IsColor() {
-        if (selectedTshirt != -1 && selectedBants != -1)
-        {
+
             Tshirt T = TshirtList.get(selectedTshirt);
             Bants B =  BantsList.get(selectedBants);
 
@@ -308,11 +301,19 @@ public class CheckClothe extends AppCompatActivity implements OnClickInterfaceTs
                 }
 
             }
+        return false;
+    }
+
+    public Boolean isTake()
+    {
+        if (selectedTshirt != -1 && selectedBants != -1)
+        {
+            return true;
         }
         else
         {
             //No CLothes Selected
-            Toast.makeText(this, "Select Tshirt And Bants..!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"Select Tshirt And Bants..!)",Toast.LENGTH_SHORT).show();
         }
         return false;
     }
